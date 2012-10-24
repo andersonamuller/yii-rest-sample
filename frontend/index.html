@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Yii REST Sample</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width">
+
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<style>
+body {
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+</style>
+<link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+<link rel="stylesheet" href="css/main.css">
+
+<script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
+</head>
+<body>
+	<!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+
+	<!-- This code is taken from http://twitter.github.com/bootstrap/examples/hero.html -->
+
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+				</a> <a class="brand" href="index.html">Yii REST Sample</a>
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+						<li class="active">
+							<a href="index.html">Home</a>
+						</li>
+					</ul>
+				</div>
+				<!--/.nav-collapse -->
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div id="loading" class="well well-small">
+			<span>Loading...</span>
+		</div>
+		<div id="alert"></div>
+		<div id="content"></div>
+
+		<hr>
+
+		<footer>
+			<address>
+				<em>&copy; Anderson Müller 2012</em>&nbsp;&nbsp;&nbsp;<a href="mailto:anderson.a.muller@gmail.com">anderson.a.muller@gmail.com</a>
+			</address>
+		</footer>
+	</div>
+	<!-- /container -->
+
+
+	<!-- templates -->
+	<script id="authenticate-template" type="text/x-handlebars-template">
+		<div>
+			<h4>Please fill the connection data</h4>
+			<div class="input-prepend">
+				<span class="add-on"><i class="icon-globe"></i></span>
+				<input id="server" class="span4" type="text" value="{{server}}" placeholder="Server">
+			</div>
+
+			<div class="input-prepend">
+				<span class="add-on"><i class="icon-user"></i></span>
+				<input id="username" class="span4" type="text" value="{{username}}" placeholder="Username">
+			</div>
+
+			<div class="input-prepend">
+				<span class="add-on"><i class="icon-lock"></i></span>
+				<input id="password" class="span4" type="password" placeholder="Password">
+			</div>
+
+			<a id="login" class="btn btn-primary"> <i class="icon-ok icon-white"></i> Log In
+			</a>
+		</div>
+	</script>
+	<script id="logout-template" type="text/x-handlebars-template">
+		<a id="logout" class="btn pull-right"><i class="icon-off"></i> Logout</a>
+	</script>
+	<script id="alert-template" type="text/x-handlebars-template">
+		<div class="alert alert-{{type}}">
+			<button type="button" class="close" data-dismiss="alert">×</button>
+			<h4>{{label}}!</h4>
+			{{message}}
+		</div>
+	</script>
+	<script id="welcome-template" type="text/x-handlebars-template">
+		<div class="hero-unit">
+			<h1>Welcome</h1>
+		</div>
+	</script>
+	<script id="options-template" type="text/x-handlebars-template">
+		<ul class="nav nav-tabs">
+			{{#options}}
+			<li {{#active}} class="active" {{/active}}>
+				<a class="option" href="{{url}}" data-verb="{{verb}}">{{label}}</a>
+			</li>
+			{{/options}}
+		</ul>
+	</script>
+	<script id="users-template" type="text/x-handlebars-template">
+		<table class="table table-striped table-condensed">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Username</th>
+					<th>First name</th>
+					<th>Last name</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{{#users}}
+				<tr>
+					<td>{{#options.view}}<a class="option btn btn-info" href="{{url}}" data-verb="{{verb}}" title="{{label}}"><i class="icon-eye-open icon-white"></i></a> {{/options.view}}
+					</td>
+					<td>{{username}}</td>
+					<td>{{person.first_name}}</td>
+					<td>{{person.last_name}}</td>
+					<td>
+						<form>
+							<input type="hidden" name="User[id]" value="{{id}}">
+						{{#options.delete}}<a class="option btn btn-danger" href="{{url}}" data-verb="{{verb}}" title="{{label}}"><i class="icon-trash icon-white"></i></a> {{/options.delete}}
+						</form>
+					</td>
+				</tr>
+				{{/users}}
+			</body>
+		</table>
+	</script>
+	<script id="user-template" type="text/x-handlebars-template">
+		<div>
+			{{#user}}
+			<form>
+				<h4>
+					User data{{#unless isNew}} of <em>{{username}}</em>{{/unless}}
+				</h4>
+
+				{{#unless isNew}}
+				<input type="hidden" name="User[id]" value="{{id}}">
+				{{/unless}}
+
+				{{#if isNew}}
+				<div class="input-prepend">
+					<span class="add-on"><i class="icon-user"></i></span>
+					<input class="span4" type="text" name="User[username]" value="{{username}}" placeholder="Username">
+				</div>
+
+				<div class="input-prepend">
+					<span class="add-on"><i class="icon-lock"></i></span>
+					<input class="span4" type="password" name="User[password]" placeholder="Password">
+				</div>
+				{{/if}}
+
+				<div class="input-prepend">
+					<span class="add-on"><i class="icon-font"></i></span>
+					<input class="span4" type="text" name="Person[first_name]" value="{{person.first_name}}" placeholder="First name(s)">
+				</div>
+
+				<div class="input-prepend">
+					<span class="add-on"><i class="icon-font"></i></span>
+					<input class="span4" type="text" name="Person[last_name]" value="{{person.last_name}}" placeholder="Last name(s)">
+				</div>
+
+				<div class="input-prepend">
+					<span class="add-on"><i class="icon-calendar"></i></span>
+					<input class="span4" type="text" name="Person[birthdate]" value="{{person.birthdate}}" placeholder="Birthdate">
+				</div>
+
+				{{#options.create}} <a class="option btn btn-primary" href="{{url}}" data-verb="{{verb}}"><i class="icon-plus icon-white"></i> {{label}}</a> {{/options.create}}
+				{{#options.update}} <a class="option btn btn-primary" href="{{url}}" data-verb="{{verb}}"><i class="icon-pencil icon-white"></i> {{label}}</a> {{/options.update}}
+				{{#options.delete}} <a class="option btn btn-danger" href="{{url}}" data-verb="{{verb}}"><i class="icon-trash icon-white"></i> {{label}}</a> {{/options.delete}}
+			</form>
+			{{/user}}
+		</div>
+	</script>
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<script>
+		window.jQuery || document.write('<script src="js/vendor/jquery-1.8.2.min.js"><\/script>')
+	</script>
+
+	<script src="js/vendor/bootstrap.min.js"></script>
+	<script src="js/vendor/handlebars.js"></script>
+	<script src="js/vendor/spin.min.js"></script>
+
+	<script src="js/plugins.js"></script>
+	<script src="js/application.js"></script>
+	<script src="js/main.js"></script>
+</body>
+</html>

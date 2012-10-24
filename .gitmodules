@@ -1,0 +1,6 @@
+[submodule "backend/protected/vendors/yii"]
+	path = backend/protected/vendors/yii
+	url = git://github.com/yiisoft/yii.git
+[submodule "backend/protected/packages/redis"]
+	path = backend/protected/packages/redis
+	url = git://github.com/phpnode/YiiRedis.git

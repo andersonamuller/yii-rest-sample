@@ -1,0 +1,8 @@
+- create yii-rest-sample database;
+- create yii-rest-sample_test database;
+
+- set database username and password in mysql.php;
+
+- run migrations;
+
+- encrypt password with bcrypt;

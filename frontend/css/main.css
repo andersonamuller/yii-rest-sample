@@ -1,0 +1,11 @@
+#content {
+	min-height: 200px;
+}
+
+#loading {
+	display: none;
+}
+
+#loading span {
+	margin-left: 28px;
+}

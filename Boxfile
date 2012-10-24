@@ -1,0 +1,64 @@
+global:
+  env:
+    - ENVIRONMENT: production
+    - PLATFORM: pagodabox
+
+web1:
+  name: backend
+  document_root: /backend
+  shared_writable_dirs:
+    - backend/assets
+    - backend/protected/runtime
+  after_build:
+    - "chmod +x backend/protected/yiic"
+  before_deploy:
+    - "backend/protected/yiic auto-migrate"
+  php_version: 5.3.10
+  php_extensions:
+    - apc
+    - curl
+    - dom
+    - freetype
+    - gd
+    - json
+    - mbstring
+    - mcrypt
+    - mysql
+    - mysqli
+    - pdo
+    - pdo_mysql
+    - redis
+
+db1:
+  name: storage
+  type: mysql
+
+cache1:
+  name: cache
+  type: redis
+
+web2:
+  name: frontend
+  document_root: /frontend
+  php_version: 5.3.10
+  php_extensions:
+    - curl
+    - mcrypt
+
+web3:
+  name: dbadmin
+  document_root: /phpMyAdmin
+  php_version: 5.3.10
+  php_extensions:
+    - apc
+    - ctype
+    - gd
+    - json
+    - mbstring
+    - mcrypt
+    - mysql
+    - mysqli
+    - session
+    - uploadprogress
+    - xml
+    - zip
