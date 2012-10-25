@@ -11,6 +11,8 @@ web1:
     - backend/protected/runtime
   after_build:
     - "chmod +x backend/protected/yiic"
+  before_deploy:
+    - "backend/protected/yiic auto-migrate"
   php_version: 5.3.10
   php_extensions:
     - apc
