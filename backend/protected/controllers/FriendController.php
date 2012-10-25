@@ -67,9 +67,16 @@ class FriendController extends Controller
 	public function actionView()
 	{
 		if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-			$friend = User::model()->with('person')->findByPk((int) $_GET['id']);
+			$authorizedUser = $this->getAuthorizedUser();
 
-			if ($friend instanceof User) {
+			$friend = Profile::model()->with('person')->findByPk((int) $_GET['id'], array(
+				'condition' => 't.created_by = :created_by',
+				'params'    => array(
+					':created_by' => $authorizedUser->id
+				)
+			));
+
+			if ($friend instanceof Profile) {
 				$actions = array(
 					array(
 						'label' => 'List friends',
@@ -156,13 +163,13 @@ class FriendController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$friend = new User();
+		$friend = new Profile();
 
-		if (isset($_POST['User']) && is_array($_POST['User']) && isset($_POST['Person']) && is_array($_POST['Person'])) {
+		if (isset($_POST['Profile']) && is_array($_POST['Profile']) && isset($_POST['Person']) && is_array($_POST['Person'])) {
 			$transaction = $friend->dbConnection->beginTransaction();
 
 			try {
-				$friend->attributes = $_POST['User'];
+				$friend->attributes = $_POST['Profile'];
 
 				$friend->authorization = md5($friend->friendname . ':' . Yii::app()->httpAuthentication->realm . ':' . $friend->password);
 				$friend->password = md5($friend->password);
@@ -201,7 +208,7 @@ class FriendController extends Controller
 						)
 					);
 
-					$friend = User::model()->with('person')->findByPk($friend->id);
+					$friend = Profile::model()->with('person')->findByPk($friend->id);
 
 					$this->sendResponse(201, CJSON::encode(array(
 						'actions' => $actions,
@@ -253,17 +260,17 @@ class FriendController extends Controller
 	{
 		parse_str(file_get_contents('php://input'), $_PUT);
 
-		if (isset($_PUT['User']['id']) && is_numeric($_PUT['User']['id']) && isset($_PUT['Person']) && is_array($_PUT['Person'])) {
+		if (isset($_PUT['Profile']['id']) && is_numeric($_PUT['Profile']['id']) && isset($_PUT['Person']) && is_array($_PUT['Person'])) {
 			$authorizedUser = $this->getAuthorizedUser();
 
-			$friend = User::model()->with('person')->findByPk((int) $_PUT['User']['id'], array(
+			$friend = Profile::model()->with('person')->findByPk((int) $_PUT['Profile']['id'], array(
 				'condition' => 't.created_by = :created_by',
 				'params'    => array(
 					':created_by' => $authorizedUser->id
 				)
 			));
 
-			if ($friend instanceof User) {
+			if ($friend instanceof Profile) {
 				$person = $friend->person;
 				$person->attributes = $_PUT['Person'];
 				if ($person->save()) {
@@ -327,10 +334,10 @@ class FriendController extends Controller
 	{
 		parse_str(file_get_contents('php://input'), $_DELETE);
 
-		if (isset($_DELETE['User']['id']) && is_numeric($_DELETE['User']['id'])) {
+		if (isset($_DELETE['Profile']['id']) && is_numeric($_DELETE['Profile']['id'])) {
 			$authorizedUser = $this->getAuthorizedUser();
 
-			$friend = User::model()->with('person')->findByPk((int) $_DELETE['User']['id'], array(
+			$friend = Profile::model()->with('person')->findByPk((int) $_DELETE['Profile']['id'], array(
 				'condition' => 't.created_by = :created_by AND t.id != :id',
 				'params'    => array(
 					':created_by' => $authorizedUser->id,
@@ -338,7 +345,7 @@ class FriendController extends Controller
 				)
 			));
 
-			if ($friend instanceof User) {
+			if ($friend instanceof Profile) {
 				if ($friend->delete()) {
 					$actions = array(
 						array(
