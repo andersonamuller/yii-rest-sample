@@ -9,3 +9,13 @@
 #loading span {
 	margin-left: 28px;
 }
+
+.username {
+	text-transform: lowercase;
+}
+
+.file-container {
+	width: 0px;
+	height: 0px;
+	overflow: hidden;
+}
