@@ -78,7 +78,7 @@ class Person extends ActiveRecord
 	public function behaviors()
 	{
 		return CMap::mergeArray(parent::behaviors(), array(
-			'asarray' => array(
+			'array' => array(
 				'additionalAttributes' => array(
 					'fullName'
 				)

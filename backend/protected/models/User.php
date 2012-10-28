@@ -67,15 +67,17 @@ class User extends ActiveRecord
 	{
 		return array(
 			'profile' => array(
-				self::BELONGS_TO,
+				self::HAS_ONE,
 				'Profile',
-				'profile_id'
+				array(
+					'id' => 'profile_id'
+				)
 			),
 			'person'  => array(
 				self::HAS_ONE,
 				'Person',
 				array(
-					'profile_id' => 'id'
+					'id' => 'profile_id'
 				),
 				'through' => 'profile'
 			)
@@ -88,7 +90,7 @@ class User extends ActiveRecord
 	public function behaviors()
 	{
 		return CMap::mergeArray(parent::behaviors(), array(
-			'asarray' => array(
+			'array' => array(
 				'exceptAttributes' => array(
 					'password',
 					'authorization'
@@ -128,7 +130,7 @@ class User extends ActiveRecord
 	 */
 	public function findByUsername($username)
 	{
-		return $this->findByAttributes(array(
+		return $this->cache(3600, $this->getCacheDependency())->findByAttributes(array(
 			'username' => $username
 		));
 	}

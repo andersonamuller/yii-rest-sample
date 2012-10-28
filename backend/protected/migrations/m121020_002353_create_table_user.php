@@ -30,7 +30,9 @@ class m121020_002353_create_table_user extends CDbMigration
 			'password'      => md5($password),
 			'authorization' => md5($username . ':' . Yii::app()->httpAuthentication->realm . ':' . $password),
 			'created_on'    => date('Y-m-d H:i:s'),
-			'created_by'    => $id
+			'created_by'    => $id,
+			'updated_on'    => date('Y-m-d H:i:s'),
+			'updated_by'    => $id
 		));
 	}
 

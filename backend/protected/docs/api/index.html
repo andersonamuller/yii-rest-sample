@@ -29,13 +29,33 @@ Yii REST Sample Console Class Reference
   <th>Package</th><th>Class</th><th>Description</th>
 </tr>
 <tr>
+  <td rowspan="2"><a name=""></a></td>
+  <td><a href="AbstractCommand.html">AbstractCommand</a></td>
+  <td>Yiic abstract command with common methods to use</td>
+</tr>
+<tr>
+  <td><a href="ClearcacheCommand.html">ClearcacheCommand</a></td>
+  <td>Yiic command to delete assets and cache</td>
+</tr>
+
+
+
+<tr>
+  <td rowspan="1"><a name="application.base"></a>application.base</td>
+  <td><a href="RestApplication.html">RestApplication</a></td>
+  <td>RestWebApplication extends CWebApplication by providing functionalities specific to rest applications.</td>
+</tr>
+
+
+
+<tr>
   <td rowspan="2"><a name="application.behaviors"></a>application.behaviors</td>
   <td><a href="AsArrayBehavior.html">AsArrayBehavior</a></td>
-  <td>Behavior to convert a model to a array</td>
+  <td>AsArrayBehavior converts a model object into an array.</td>
 </tr>
 <tr>
   <td><a href="HttpAuthenticationBehavior.html">HttpAuthenticationBehavior</a></td>
-  <td>HttpAuthenticationBehavior performs authorization checks using http authentication</td>
+  <td>HttpAuthenticationBehavior performs authorization checks using http authentication.</td>
 </tr>
 
 
@@ -43,19 +63,19 @@ Yii REST Sample Console Class Reference
 <tr>
   <td rowspan="4"><a name="application.components"></a>application.components</td>
   <td><a href="ActiveRecord.html">ActiveRecord</a></td>
-  <td>ActiveRecord class file</td>
+  <td>ActiveRecord adds default functionalities to all models extending from this class.</td>
 </tr>
 <tr>
   <td><a href="Controller.html">Controller</a></td>
-  <td>Controller class file</td>
+  <td>Controller adds default functionalities to all controllers extending from this class.</td>
 </tr>
 <tr>
   <td><a href="HttpDigestAuthentication.html">HttpDigestAuthentication</a></td>
-  <td>HttpDigestAuthentication</td>
+  <td>HttpDigestAuthentication provides authorization through a HTTP Digest Authentication.</td>
 </tr>
 <tr>
   <td><a href="HttpDigestAuthenticationData.html">HttpDigestAuthenticationData</a></td>
-  <td>HttpDigestAuthenticationData</td>
+  <td>HttpDigestAuthenticationData represents the authorization information on the header of a request.</td>
 </tr>
 
 
@@ -67,11 +87,11 @@ Yii REST Sample Console Class Reference
 </tr>
 <tr>
   <td><a href="FriendController.html">FriendController</a></td>
-  <td>FriendController contains the actions related to the friend entity</td>
+  <td>FriendController contains the actions related to the friend entity.</td>
 </tr>
 <tr>
   <td><a href="UserController.html">UserController</a></td>
-  <td>UserController contains the actions related to the user entity</td>
+  <td>UserController contains the actions related to the user entity.</td>
 </tr>
 
 
@@ -79,11 +99,11 @@ Yii REST Sample Console Class Reference
 <tr>
   <td rowspan="2"><a name="application.filters"></a>application.filters</td>
   <td><a href="HttpAuthenticationFilter.html">HttpAuthenticationFilter</a></td>
-  <td>HttpAuthenticationFilter performs authorization checks using http authentication</td>
+  <td>HttpAuthenticationFilter performs authorization checks using http authentication.</td>
 </tr>
 <tr>
   <td><a href="OnlyAdminFilter.html">OnlyAdminFilter</a></td>
-  <td>OnlyAdminFilter class file.</td>
+  <td>OnlyAdminFilter allows only the admin user to perform actions in the controller.</td>
 </tr>
 
 

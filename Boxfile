@@ -8,6 +8,7 @@ web1:
   document_root: /backend
   shared_writable_dirs:
     - backend/assets
+    - backend/uploads
     - backend/protected/runtime
   after_build:
     - "chmod +x backend/protected/yiic"
@@ -20,6 +21,7 @@ web1:
     - dom
     - freetype
     - gd
+    - imagick
     - json
     - mbstring
     - mcrypt

@@ -1,4 +1,6 @@
 <?php
+Yii::setPathOfAlias('packages', dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'packages');
+
 $config = array(
 	'class' => 'packages.redis.ARedisConnection',
 	'port'  => 6379

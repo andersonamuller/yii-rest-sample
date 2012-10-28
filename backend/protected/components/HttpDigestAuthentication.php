@@ -1,6 +1,6 @@
 <?php
 /**
- * HttpDigestAuthentication
+ * HttpDigestAuthentication provides authorization through a HTTP Digest Authentication.
  *
  * This class provides methods to extract authorization information from the headers of a request,
  * and based on the configuration of this class, authenticate or send unauthorized and bad request responses.

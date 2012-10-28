@@ -28,7 +28,9 @@ if (isset($_POST['logout'])) {
 	$user = new User();
 	if ($user->isAuthenticated()) {
 		$url = '';
-		if (isset($_SERVER['HTTP_FORWARD'])) {
+		if (isset($_GET['url'])) {
+			$url = $_GET['url'];
+		} elseif (isset($_SERVER['HTTP_FORWARD'])) {
 			$url = $_SERVER['HTTP_FORWARD'];
 		} elseif (isset($_SESSION['server'])) {
 			$url = $_SESSION['server'];
@@ -39,10 +41,19 @@ if (isset($_POST['logout'])) {
 			case 'POST':
 				$requestBody = $_POST;
 
+				foreach ($_FILES as $input => $fileProperties) {
+					$inputName = array_pop(array_keys($fileProperties['name']));
+					$requestBody[$input][$inputName]['name'] = $fileProperties['name'][$inputName];
+					$requestBody[$input][$inputName]['size'] = $fileProperties['size'][$inputName];
+					$requestBody[$input][$inputName]['type'] = $fileProperties['type'][$inputName];
+					$requestBody[$input][$inputName]['content'] = file_get_contents($fileProperties['tmp_name'][$inputName]);
+				}
+
 				break;
 			case 'PUT':
 			case 'DELETE':
 				parse_str(file_get_contents('php://input'), $requestBody);
+
 				break;
 		}
 

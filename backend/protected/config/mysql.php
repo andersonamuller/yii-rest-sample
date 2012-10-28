@@ -3,7 +3,7 @@ $config = array(
 	'emulatePrepare'        => true,
 	'charset'               => 'utf8',
 	'nullConversion'        => PDO::NULL_EMPTY_STRING,
-	'schemaCachingDuration' => 300,
+	'schemaCachingDuration' => 3600,
 	'attributes'            => array(
 		PDO::MYSQL_ATTR_FOUND_ROWS => true
 	),
@@ -30,10 +30,10 @@ if (isset($_SERVER['ENVIRONMENT']) && $_SERVER['ENVIRONMENT'] == 'development') 
 	$config = CMap::mergeArray($config, array(
 		'enableProfiling'       => true,
 		'enableParamLogging'    => true,
-		'schemaCachingDuration' => 0,
-		'initSQLs'              => array(
-			'SET FOREIGN_KEY_CHECKS = 0'
-		)
+		'schemaCachingDuration' => 3600,
+		//'initSQLs'              => array(
+		//	'SET FOREIGN_KEY_CHECKS = 0'
+		//)
 	));
 }
 

@@ -13,4 +13,5 @@ if (isset($_SERVER['ENVIRONMENT']) && $_SERVER['ENVIRONMENT'] == 'production') {
 }
 
 require_once($yii);
-Yii::createWebApplication($config)->run();
+require_once(dirname(__FILE__) . '/protected/base/RestApplication.php');
+Yii::createApplication('RestApplication', $config)->run();

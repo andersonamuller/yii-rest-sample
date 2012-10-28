@@ -1,6 +1,6 @@
 <?php
 /**
- * OnlyAdminFilter class file.
+ * OnlyAdminFilter allows only the admin user to perform actions in the controller.
  *
  * @author Anderson Müller <anderson.a.muller@gmail.com>
  * @version 0.1
@@ -17,7 +17,7 @@ class OnlyAdminFilter extends CFilter
 	 */
 	protected function preFilter($filterChain)
 	{
-		$user = User::model()->findByUsername(Yii::app()->httpAuthentication->username);
+		$user = Yii::app()->user;
 		if (($user instanceof User) && $user->isAdmin()) {
 			return true;
 		}

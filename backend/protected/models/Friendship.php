@@ -39,12 +39,7 @@ class Friendship extends ActiveRecord
 				'profile_id, friend_id',
 				'numerical',
 				'integerOnly' => true
-			),
-			array(
-				'profile_id, friend_id',
-				'safe',
-				'on' => 'search'
-			),
+			)
 		);
 	}
 
@@ -75,22 +70,6 @@ class Friendship extends ActiveRecord
 		return CMap::mergeArray(parent::attributeLabels(), array(
 			'profile_id' => 'Profile',
 			'friend_id'  => 'Friend'
-		));
-	}
-
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		$criteria = new CDbCriteria;
-
-		$criteria->compare('profile_id', $this->profile_id);
-		$criteria->compare('friend_id', $this->friend_id);
-
-		return new CActiveDataProvider($this, array(
-			'criteria' => $criteria,
 		));
 	}
 }

@@ -1,6 +1,4 @@
 <?php
-// This is the configuration for yiic console application.
-// Any writable CConsoleApplication properties can be configured here.
 return array(
 	'basePath'   => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
 	'name'       => 'Yii REST Sample Console',
@@ -8,10 +6,13 @@ return array(
 	'charset'    => 'UTF-8',
 	'import'     => array(
 		'application.components.*',
+		'packages.redis.*'
 	),
 	'components' => array(
+		'redis'              => require 'redis.php',
+		'cache'              => require 'cache.php',
 		'db'                 => require 'mysql.php',
-		'httpAuthentication' => require 'authentication.php',
+		'httpAuthentication' => require 'authentication.php'
 	),
 	'commandMap' => require 'commands.php'
 );

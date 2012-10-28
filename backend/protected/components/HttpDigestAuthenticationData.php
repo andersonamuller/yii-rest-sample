@@ -1,8 +1,6 @@
 <?php
 /**
- * HttpDigestAuthenticationData
- *
- * This class represents the authorization information from the headers of a request.
+ * HttpDigestAuthenticationData represents the authorization information on the header of a request.
  *
  * Inspired by
  * - https://github.com/alanshaw/php-http-digest-auth/blob/master/HTTPDigestAuth.php

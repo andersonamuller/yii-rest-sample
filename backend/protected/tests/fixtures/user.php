@@ -8,7 +8,7 @@ return array(
 		'authorization' => 'a43cd993b68a5903b7fb997fc312a473',
 		'created_on'    => '2012-10-20 14:38:15',
 		'created_by'    => 1,
-		'updated_on'    => null,
-		'updated_by'    => null
+		'updated_on'    => '2012-10-20 14:38:15',
+		'updated_by'    => 1
 	)
 );

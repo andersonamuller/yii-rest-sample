@@ -46,27 +46,51 @@ class Profile extends ActiveRecord
 	{
 		return array(
 			'person'  => array(
-				self::HAS_ONE,
+				self::BELONGS_TO,
 				'Person',
 				array(
-					'profile_id' => 'id'
+					'id' => 'profile_id'
 				)
 			),
 			'user'    => array(
-				self::HAS_ONE,
+				self::BELONGS_TO,
 				'User',
 				array(
-					'profile_id' => 'id'
+					'id' => 'profile_id'
 				)
 			),
 			'friends' => array(
 				self::MANY_MANY,
 				'Profile',
 				'friendship(profile_id, friend_id)',
-				'with'  => 'person',
-				'order' => 'person.birthdate DESC'
+				'with'   => 'person',
+				'select' => array(
+					'DATEDIFF(ADDDATE(ADDDATE(birthdate, INTERVAL YEAR(NOW()) - YEAR(birthdate) YEAR), INTERVAL ADDDATE(birthdate, INTERVAL YEAR(NOW()) - YEAR(birthdate) YEAR) < DATE(NOW()) YEAR), NOW()) AS days_to_birthday'
+				),
+				'order'  => 'days_to_birthday ASC'
 			)
 		);
+	}
+
+	/**
+	 * @see ActiveRecord::behaviors()
+	 */
+	public function behaviors()
+	{
+		return CMap::mergeArray(parent::behaviors(), array(
+			'array' => array(
+				'additionalAttributes' => array(
+					'pictureUrl'
+				)
+			)
+		));
+	}
+
+	public function afterDelete()
+	{
+		unlink($this->getPicturePath());
+
+		parent::afterDelete();
 	}
 
 	/**
@@ -77,5 +101,21 @@ class Profile extends ActiveRecord
 		return CMap::mergeArray(parent::attributeLabels(), array(
 			'picture' => 'Picture',
 		));
+	}
+
+	/**
+	 * @return string the profile picture url
+	 */
+	public function getPictureUrl()
+	{
+		return Yii::app()->getBaseUrl(true) . '/' . Yii::app()->params->uploadDirectory . '/' . $this->picture;
+	}
+
+	/**
+	 * @return string the profile picture path
+	 */
+	public function getPicturePath()
+	{
+		return realpath(Yii::app()->getBasePath() . DIRECTORY_SEPARATOR . '..') . DIRECTORY_SEPARATOR . Yii::app()->params->uploadDirectory . DIRECTORY_SEPARATOR . $this->picture;
 	}
 }

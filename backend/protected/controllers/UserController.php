@@ -1,6 +1,6 @@
 <?php
 /**
- * UserController contains the actions related to the user entity
+ * UserController contains the actions related to the user entity.
  *
  * @author Anderson Müller <anderson.a.muller@gmail.com>
  * @version 0.1
@@ -11,8 +11,8 @@ class UserController extends Controller
 	/**
 	 * Only the admin user is allowed to execute actions from this controller
 	 *
+	 * @return array of filters
 	 * @see CController::filters()
-	 * @return array
 	 */
 	public function filters()
 	{
@@ -23,88 +23,55 @@ class UserController extends Controller
 		);
 	}
 
-	public function options()
+	/**
+	 * Default action when is not defined in the route
+	 * Respond with the available options to manage users
+	 *
+	 * @return void
+	 */
+	public function actionIndex()
 	{
-		return array(
-			'list'   => array(
-				'label' => 'List users',
-				'verb'  => 'GET',
-				'url'   => $this->createAbsoluteUrl('list')
-			),
-			'new'    => array(
-				'label' => 'New user',
-				'verb'  => 'GET',
-				'url'   => $this->createAbsoluteUrl('new')
-			),
-			'view'   => array(
-				'label' => 'View',
-				'verb'  => 'GET',
-				'url'   => $this->createAbsoluteUrl('view', array(
-					'id' => $user->id
-				))
-			),
-			'delete' => $authorizedUser->id == $user->id ? array() : array(
-				'label' => 'Delete',
-				'verb'  => 'DELETE',
-				'url'   => $this->createAbsoluteUrl('delete')
-			)
-		);
+		$this->render(array(
+			'options' => array_merge($this->getOption('list'), $this->getOption('new'))
+		));
 	}
 
 	/**
-	 * Fetch all users
+	 * Fetch all users except the admin
 	 *
 	 * @return void
 	 */
 	public function actionList()
 	{
-		$options = array(
-			array(
-				'label'  => 'List users',
-				'verb'   => 'GET',
-				'url'    => $this->createAbsoluteUrl('list'),
-				'active' => true
-			),
-			array(
-				'label' => 'New user',
-				'verb'  => 'GET',
-				'url'   => $this->createAbsoluteUrl('new')
-			)
-		);
-
-		$authorizedUser = $this->getAuthorizedUser();
-
-		$users = User::model()->with('profile', 'person')->findAll(array(
-			'condition' => 't.created_by = :created_by AND t.id != :id',
+		$users = User::model()->with('person')->findAll(array(
+			'condition' => 't.created_by = :user_id AND t.id != :user_id',
 			'params'    => array(
-				':created_by' => $authorizedUser->id,
-				':id'         => $authorizedUser->id
+				':user_id' => Yii::app()->user->id
 			)
 		));
 
-		$records = array();
+		$list = array();
 		foreach ($users as $user) {
-			$records[] = CMap::mergeArray($user->asArray(), array(
-				'options' => array(
-					'view'   => array(
-						'label' => 'View',
-						'verb'  => 'GET',
-						'url'   => $this->createAbsoluteUrl('view', array(
-							'id' => $user->id
-						))
-					),
-					'delete' => $authorizedUser->id == $user->id ? array() : array(
-						'label' => 'Delete',
-						'verb'  => 'DELETE',
-						'url'   => $this->createAbsoluteUrl('delete')
-					)
-				)
+			$options = $this->getOption('view', array(), array(
+				'id' => $user->id
+			));
+
+			if ((Yii::app()->user->id == $user->id) || (Yii::app()->user->id == $user->created_by)) {
+				$options = array_merge($options, $this->getOption('delete'));
+			}
+
+			$list[] = CMap::mergeArray($user->asArray(), array(
+				'options' => $options
 			));
 		}
 
+		$options = array_merge($this->getOption('list', array(
+			'active' => true
+		)), $this->getOption('new'));
+
 		$this->render(array(
 			'options' => $options,
-			'users'   => $records
+			'list'    => $list
 		));
 	}
 
@@ -115,42 +82,30 @@ class UserController extends Controller
 	 */
 	public function actionView()
 	{
-		if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-			$user = User::model()->with('person')->findByPk((int) $_GET['id']);
+		$id = Yii::app()->request->getParam('id');
+
+		if ($id > 0) {
+			$user = User::model()->with('person')->findByPk($id, array(
+				'condition' => 't.created_by = :user_id OR t.id = :user_id',
+				'params'    => array(
+					':user_id' => Yii::app()->user->id
+				)
+			));
 
 			if ($user instanceof User) {
-				$options = array(
-					array(
-						'label' => 'List users',
-						'verb'  => 'GET',
-						'url'   => $this->createAbsoluteUrl('list')
-					),
-					array(
-						'label'  => 'View user',
-						'verb'   => 'GET',
-						'url'    => $this->createAbsoluteUrl('view', array(
-							'id' => $user->id
-						)),
-						'active' => true
-					)
-				);
+				$options = array_merge($this->getOption('list'), $this->getOption('view', array(
+					'active' => true
+				), array(
+					'id' => $user->id
+				)));
+
+				$user = CMap::mergeArray($user->asArray(), array(
+					'options' => array_merge($this->getOption('update'), $this->getOption('delete'))
+				));
 
 				$this->render(array(
 					'options' => $options,
-					'user'    => CMap::mergeArray($user->asArray(), array(
-						'options' => array(
-							'update' => array(
-								'label' => 'Update',
-								'verb'  => 'PUT',
-								'url'   => $this->createAbsoluteUrl('update')
-							),
-							'delete' => array(
-								'label' => 'Delete',
-								'verb'  => 'DELETE',
-								'url'   => $this->createAbsoluteUrl('delete')
-							)
-						)
-					))
+					'data'    => $user
 				));
 			} else {
 				$this->sendResponse(404);
@@ -161,67 +116,58 @@ class UserController extends Controller
 	}
 
 	/**
-	 * Fetch a new user
+	 * Fetch a new user with profile and person data
 	 *
 	 * @return void
 	 */
 	public function actionNew()
 	{
-		$options = array(
-			array(
-				'label' => 'List users',
-				'verb'  => 'GET',
-				'url'   => $this->createAbsoluteUrl('list')
-			),
-			array(
-				'label'  => 'New user',
-				'verb'   => 'GET',
-				'url'    => $this->createAbsoluteUrl('new'),
-				'active' => true
-			)
-		);
-
 		$user = new User();
 		$user->person = new Person();
 
+		$user = CMap::mergeArray($user->asArray(), array(
+			'options' => $this->getOption('create')
+		));
+
+		$options = array_merge($this->getOption('list'), $this->getOption('new', array(
+			'active' => true
+		)));
+
 		$this->render(array(
 			'options' => $options,
-			'user'    => CMap::mergeArray($user->asArray(), array(
-				'options' => array(
-					'create' => array(
-						'label' => 'Create',
-						'verb'  => 'POST',
-						'url'   => $this->createAbsoluteUrl('create')
-					),
-				)
-			))
+			'data'    => $user
 		));
 	}
 
 	/**
-	 * Create a new user
+	 * Create a new user, with profile and person data
 	 *
 	 * @return void
 	 */
 	public function actionCreate()
 	{
-		$user = new User();
+		$userAttributes = Yii::app()->request->getPost('User');
+		$personAttributes = Yii::app()->request->getPost('Person');
 
-		if (isset($_POST['User']) && is_array($_POST['User']) && isset($_POST['Person']) && is_array($_POST['Person'])) {
+		$errors = array();
+
+		if (is_array($userAttributes) && is_array($personAttributes)) {
+			$user = new User();
+
 			$transaction = $user->dbConnection->beginTransaction();
 
 			try {
-				$user->attributes = $_POST['User'];
+				$user->attributes = $userAttributes;
 
 				$user->authorization = md5($user->username . ':' . Yii::app()->httpAuthentication->realm . ':' . $user->password);
 				$user->password = md5($user->password);
 
 				$valid = false;
 				if ($user->profile_id === null) {
-					$profile = new Profile;
+					$profile = new Profile();
 					if ($profile->save()) {
 						$person = new Person();
-						$person->attributes = $_POST['Person'];
+						$person->attributes = $personAttributes;
 						$person->profile_id = $profile->id;
 						$person->save();
 
@@ -234,43 +180,28 @@ class UserController extends Controller
 				if ($valid && $user->save()) {
 					$transaction->commit();
 
-					$options = array(
-						array(
-							'label' => 'List users',
-							'verb'  => 'GET',
-							'url'   => $this->createAbsoluteUrl('list')
-						),
-						array(
-							'label'  => 'View user',
-							'verb'   => 'GET',
-							'url'    => $this->createAbsoluteUrl('view', array(
-								'id' => $user->id
-							)),
-							'active' => true
-						)
-					);
-
 					$user = User::model()->with('person')->findByPk($user->id);
+					if ($user instanceof User) {
+						$options = array_merge($this->getOption('list'), $this->getOption('view', array(
+							'active' => true
+						), array(
+							'id' => $user->id
+						)));
 
-					$this->sendResponse(201, CJSON::encode(array(
-						'options' => $options,
-						'user'    => CMap::mergeArray($user->asArray(), array(
-							'options' => array(
-								'update' => array(
-									'label' => 'Update',
-									'verb'  => 'PUT',
-									'url'   => $this->createAbsoluteUrl('update')
-								),
-								'delete' => array(
-									'label' => 'Delete',
-									'verb'  => 'DELETE',
-									'url'   => $this->createAbsoluteUrl('delete')
-								)
-							)
-						))
-					)));
+						$user = CMap::mergeArray($user->asArray(), array(
+							'options' => array_merge($this->getOption('update'), $this->getOption('delete'))
+						));
+
+						$this->sendResponse(201, $this->render(array(
+							'options' => $options,
+							'data'    => $user
+						), true));
+					} else {
+						$this->sendResponse(404);
+					}
 				}
 			} catch (Exception $exception) {
+				$errors['action'][] = $exception->getMessage();
 				$transaction->rollback();
 			}
 		} else {
@@ -287,68 +218,48 @@ class UserController extends Controller
 			$errors['person'] = $person->errors;
 		}
 
-		$this->sendResponse(500, CJSON::encode(array(
+		$this->sendResponse(500, $this->render(array(
 			'errors' => $errors
-		)));
+		), true));
 	}
 
 	/**
-	 * Update a user
+	 * Update a user person data
 	 *
 	 * @access public
 	 * @return void
 	 */
 	public function actionUpdate()
 	{
-		parse_str(file_get_contents('php://input'), $_PUT);
+		$userAttributes = Yii::app()->request->getPut('User');
+		$personAttributes = Yii::app()->request->getPut('Person');
 
-		if (isset($_PUT['User']['id']) && is_numeric($_PUT['User']['id']) && isset($_PUT['Person']) && is_array($_PUT['Person'])) {
-			$authorizedUser = $this->getAuthorizedUser();
-
-			$user = User::model()->with('person')->findByPk((int) $_PUT['User']['id'], array(
-				'condition' => 't.created_by = :created_by',
+		if (is_array($userAttributes) && is_numeric($userAttributes['id']) && is_array($personAttributes)) {
+			$user = User::model()->with('person')->findByPk($userAttributes['id'], array(
+				'condition' => 't.created_by = :user_id',
 				'params'    => array(
-					':created_by' => $authorizedUser->id
+					':user_id' => Yii::app()->user->id
 				)
 			));
 
 			if ($user instanceof User) {
 				$person = $user->person;
-				$person->attributes = $_PUT['Person'];
+				$person->attributes = $personAttributes;
 				if ($person->save()) {
-					$options = array(
-						array(
-							'label' => 'List users',
-							'verb'  => 'GET',
-							'url'   => $this->createAbsoluteUrl('list')
-						),
-						array(
-							'label'  => 'View user',
-							'verb'   => 'GET',
-							'url'    => $this->createAbsoluteUrl('view', array(
-								'id' => $user->id
-							)),
-							'active' => true
-						)
-					);
-
-					$this->sendResponse(200, CJSON::encode(array(
-						'options' => $options,
-						'user'    => CMap::mergeArray($user->asArray(), array(
-							'options' => array(
-								'update' => array(
-									'label' => 'Update',
-									'verb'  => 'PUT',
-									'url'   => $this->createAbsoluteUrl('update')
-								),
-								'delete' => array(
-									'label' => 'Delete',
-									'verb'  => 'DELETE',
-									'url'   => $this->createAbsoluteUrl('delete')
-								)
-							)
-						))
+					$options = array_merge($this->getOption('list'), $this->getOption('view', array(
+						'active' => true
+					), array(
+						'id' => $user->id
 					)));
+
+					$user = CMap::mergeArray($user->asArray(), array(
+						'options' => array_merge($this->getOption('update'), $this->getOption('delete'))
+					));
+
+					$this->sendResponse(200, $this->render(array(
+						'options' => $options,
+						'data'    => $user
+					), true));
 				}
 			} else {
 				$this->sendResponse(404);
@@ -361,9 +272,9 @@ class UserController extends Controller
 			$errors['person'] = $person->errors;
 		}
 
-		$this->sendResponse(500, CJSON::encode(array(
+		$this->sendResponse(500, $this->render(array(
 			'errors' => $errors
-		)));
+		), true));
 	}
 
 	/**
@@ -374,37 +285,23 @@ class UserController extends Controller
 	 */
 	public function actionDelete()
 	{
-		parse_str(file_get_contents('php://input'), $_DELETE);
+		$userAttributes = Yii::app()->request->getDelete('User');
 
-		if (isset($_DELETE['User']['id']) && is_numeric($_DELETE['User']['id'])) {
-			$authorizedUser = $this->getAuthorizedUser();
-
-			$user = User::model()->with('person')->findByPk((int) $_DELETE['User']['id'], array(
-				'condition' => 't.created_by = :created_by AND t.id != :id',
+		if (is_array($userAttributes) && is_numeric($userAttributes['id'])) {
+			$user = User::model()->findByPk($userAttributes['id'], array(
+				'condition' => 't.created_by = :user_id AND t.id != :user_id',
 				'params'    => array(
-					':created_by' => $authorizedUser->id,
-					':id'         => $authorizedUser->id
+					':user_id' => Yii::app()->user->id
 				)
 			));
 
 			if ($user instanceof User) {
 				if ($user->delete()) {
-					$options = array(
-						array(
-							'label' => 'List users',
-							'verb'  => 'GET',
-							'url'   => $this->createAbsoluteUrl('list')
-						),
-						array(
-							'label' => 'New user',
-							'verb'  => 'GET',
-							'url'   => $this->createAbsoluteUrl('new')
-						)
-					);
+					$options = array_merge($this->getOption('list'), $this->getOption('new'));
 
-					$this->sendResponse(200, CJSON::encode(array(
+					$this->sendResponse(200, $this->render(array(
 						'options' => $options
-					)));
+					), true));
 				}
 			} else {
 				$this->sendResponse(404);
@@ -417,9 +314,9 @@ class UserController extends Controller
 			$errors['user'] = $user->errors;
 		}
 
-		$this->sendResponse(500, CJSON::encode(array(
+		$this->sendResponse(500, $this->render(array(
 			'errors' => $errors
-		)));
+		), true));
 	}
 }
 ?>

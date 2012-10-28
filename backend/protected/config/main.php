@@ -1,6 +1,4 @@
 <?php
-Yii::setPathOfAlias('packages', dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'packages');
-
 return array(
 	'basePath'          => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
 	'name'              => 'Yii REST Sample',
@@ -33,10 +31,8 @@ return array(
 				)
 			)
 		),
-		'cache'              => array(
-			'class' => 'packages.redis.ARedisCache'
-		),
 		'redis'              => require 'redis.php',
+		'cache'              => require 'cache.php',
 		'db'                 => require 'mysql.php',
 		'httpAuthentication' => require 'authentication.php',
 		'urlManager'         => array(
@@ -75,5 +71,8 @@ return array(
 				)
 			)
 		)
+	),
+	'params'            => array(
+		'uploadDirectory' => 'uploads'
 	)
 );

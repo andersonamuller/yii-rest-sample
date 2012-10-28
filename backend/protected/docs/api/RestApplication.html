@@ -1,0 +1,1131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="language" content="en" />
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<link rel="stylesheet" type="text/css" href="css/api.css" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<title>RestApplication</title>
+</head>
+
+<body>
+<div id="apiPage">
+
+<div id="apiHeader">
+Yii REST Sample Console Class Reference
+</div><!-- end of header -->
+
+<div id="content">
+<h1>RestApplication</h1>
+<div id="nav">
+<a href="index.html">All Packages</a>
+| <a href="#properties">Properties</a>
+| <a href="#methods">Methods</a>
+| <a href="#events">Events</a>
+</div>
+
+<table class="summaryTable docClass">
+<colgroup>
+	<col class="col-name" />
+	<col class="col-value" />
+</colgroup>
+<tr>
+  <th>Package</th>
+  <td><a href="index.html#application.base">application.base</a></td>
+</tr>
+<tr>
+  <th>Inheritance</th>
+  <td>class RestApplication &raquo;
+<a href="CWebApplication.html">CWebApplication</a> &raquo;
+<a href="CApplication.html">CApplication</a> &raquo;
+<a href="CModule.html">CModule</a> &raquo;
+<a href="CComponent.html">CComponent</a></td>
+</tr>
+<tr>
+  <th>Version</th>
+  <td>0.1</td>
+</tr>
+<tr>
+  <th>Source Code</th>
+  <td>app/base/RestApplication.php</td>
+</tr>
+<tr>
+  <th>Author</th>
+  <td>Anderson Müller &lt;anderson.a.muller@gmail.com&gt;</td>
+</tr>
+</table>
+
+<div id="classDescription">
+RestWebApplication extends CWebApplication by providing functionalities specific to rest applications.</div>
+<a name="properties"></a>
+
+<div class="summary docProperty">
+<h2>Public Properties</h2>
+
+<p><a href="#" class="toggle">Hide inherited properties</a></p>
+
+<table class="summaryTable">
+<colgroup>
+	<col class="col-property" />
+	<col class="col-type" />
+	<col class="col-description" />
+	<col class="col-defined" />
+</colgroup>
+<tr>
+  <th>Property</th><th>Type</th><th>Description</th><th>Defined By</th>
+</tr>
+<tr class="inherited" id="assetManager">
+  <td><a href="CWebApplication.html#assetManager-detail">assetManager</a></td>
+  <td><a href="CAssetManager.html">CAssetManager</a></td>
+  <td>the asset manager component</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="authManager">
+  <td><a href="CWebApplication.html#authManager-detail">authManager</a></td>
+  <td><a href="IAuthManager.html">IAuthManager</a></td>
+  <td>the authorization manager component</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="basePath">
+  <td><a href="CApplication.html#basePath-detail">basePath</a></td>
+  <td>string</td>
+  <td>Returns the root path of the application.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="baseUrl">
+  <td><a href="CApplication.html#baseUrl-detail">baseUrl</a></td>
+  <td>string</td>
+  <td>Returns the relative URL for the application.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="behaviors">
+  <td><a href="CModule.html#behaviors-detail">behaviors</a></td>
+  <td>array</td>
+  <td>the behaviors that should be attached to the module.</td>
+  <td><a href="CModule.html">CModule</a></td>
+</tr>
+<tr class="inherited" id="cache">
+  <td><a href="CApplication.html#cache-detail">cache</a></td>
+  <td><a href="CCache.html">CCache</a></td>
+  <td>Returns the cache component.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="catchAllRequest">
+  <td><a href="CWebApplication.html#catchAllRequest-detail">catchAllRequest</a></td>
+  <td>array</td>
+  <td>the configuration specifying a controller which should handle
+all user requests.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="charset">
+  <td><a href="CApplication.html#charset-detail">charset</a></td>
+  <td>string</td>
+  <td>the charset currently used for the application.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="clientScript">
+  <td><a href="CWebApplication.html#clientScript-detail">clientScript</a></td>
+  <td><a href="CClientScript.html">CClientScript</a></td>
+  <td>Returns the client script manager.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="components">
+  <td><a href="CModule.html#components-detail">components</a></td>
+  <td>array</td>
+  <td>Returns the application components.</td>
+  <td><a href="CModule.html">CModule</a></td>
+</tr>
+<tr class="inherited" id="controller">
+  <td><a href="CWebApplication.html#controller-detail">controller</a></td>
+  <td><a href="CController.html">CController</a></td>
+  <td>the currently active controller</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="controllerMap">
+  <td><a href="CWebApplication.html#controllerMap-detail">controllerMap</a></td>
+  <td>array</td>
+  <td>mapping from controller ID to controller configurations.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="controllerNamespace">
+  <td><a href="CWebApplication.html#controllerNamespace-detail">controllerNamespace</a></td>
+  <td>string</td>
+  <td>Namespace that should be used when loading controllers.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="controllerPath">
+  <td><a href="CWebApplication.html#controllerPath-detail">controllerPath</a></td>
+  <td>string</td>
+  <td>the directory that contains the controller classes.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="coreMessages">
+  <td><a href="CApplication.html#coreMessages-detail">coreMessages</a></td>
+  <td><a href="CPhpMessageSource.html">CPhpMessageSource</a></td>
+  <td>Returns the core message translations component.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="dateFormatter">
+  <td><a href="CApplication.html#dateFormatter-detail">dateFormatter</a></td>
+  <td><a href="CDateFormatter.html">CDateFormatter</a></td>
+  <td>Returns the locale-dependent date formatter.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="db">
+  <td><a href="CApplication.html#db-detail">db</a></td>
+  <td><a href="CDbConnection.html">CDbConnection</a></td>
+  <td>Returns the database connection component.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="defaultController">
+  <td><a href="CWebApplication.html#defaultController-detail">defaultController</a></td>
+  <td>string</td>
+  <td>the route of the default controller, action or module.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="errorHandler">
+  <td><a href="CApplication.html#errorHandler-detail">errorHandler</a></td>
+  <td><a href="CErrorHandler.html">CErrorHandler</a></td>
+  <td>Returns the error handler component.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="extensionPath">
+  <td><a href="CApplication.html#extensionPath-detail">extensionPath</a></td>
+  <td>string</td>
+  <td>Returns the root directory that holds all third-party extensions.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="homeUrl">
+  <td><a href="CApplication.html#homeUrl-detail">homeUrl</a></td>
+  <td>string</td>
+  <td>the homepage URL</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="id">
+  <td><a href="CApplication.html#id-detail">id</a></td>
+  <td>string</td>
+  <td>Returns the unique identifier for the application.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="language">
+  <td><a href="CApplication.html#language-detail">language</a></td>
+  <td>string</td>
+  <td>Returns the language that the user is using and the application should be targeted to.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="layout">
+  <td><a href="CWebApplication.html#layout-detail">layout</a></td>
+  <td>mixed</td>
+  <td>the application-wide layout.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="layoutPath">
+  <td><a href="CWebApplication.html#layoutPath-detail">layoutPath</a></td>
+  <td>string</td>
+  <td>the root directory of layout files.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="locale">
+  <td><a href="CApplication.html#locale-detail">locale</a></td>
+  <td><a href="CLocale.html">CLocale</a></td>
+  <td>Returns the locale instance.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="localeDataPath">
+  <td><a href="CApplication.html#localeDataPath-detail">localeDataPath</a></td>
+  <td>string</td>
+  <td>Returns the directory that contains the locale data.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="messages">
+  <td><a href="CApplication.html#messages-detail">messages</a></td>
+  <td><a href="CMessageSource.html">CMessageSource</a></td>
+  <td>Returns the application message translations component.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="modulePath">
+  <td><a href="CModule.html#modulePath-detail">modulePath</a></td>
+  <td>string</td>
+  <td>Returns the directory that contains the application modules.</td>
+  <td><a href="CModule.html">CModule</a></td>
+</tr>
+<tr class="inherited" id="modules">
+  <td><a href="CModule.html#modules-detail">modules</a></td>
+  <td>array</td>
+  <td>Returns the configuration of the currently installed modules.</td>
+  <td><a href="CModule.html">CModule</a></td>
+</tr>
+<tr class="inherited" id="name">
+  <td><a href="CApplication.html#name-detail">name</a></td>
+  <td>string</td>
+  <td>the application name.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="numberFormatter">
+  <td><a href="CApplication.html#numberFormatter-detail">numberFormatter</a></td>
+  <td><a href="CNumberFormatter.html">CNumberFormatter</a></td>
+  <td>the locale-dependent number formatter.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="params">
+  <td><a href="CModule.html#params-detail">params</a></td>
+  <td><a href="CAttributeCollection.html">CAttributeCollection</a></td>
+  <td>Returns user-defined parameters.</td>
+  <td><a href="CModule.html">CModule</a></td>
+</tr>
+<tr class="inherited" id="parentModule">
+  <td><a href="CModule.html#parentModule-detail">parentModule</a></td>
+  <td><a href="CModule.html">CModule</a></td>
+  <td>Returns the parent module.</td>
+  <td><a href="CModule.html">CModule</a></td>
+</tr>
+<tr class="inherited" id="preload">
+  <td><a href="CModule.html#preload-detail">preload</a></td>
+  <td>array</td>
+  <td>the IDs of the application components that should be preloaded.</td>
+  <td><a href="CModule.html">CModule</a></td>
+</tr>
+<tr class="inherited" id="request">
+  <td><a href="CApplication.html#request-detail">request</a></td>
+  <td><a href="CHttpRequest.html">CHttpRequest</a></td>
+  <td>Returns the request component.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="runtimePath">
+  <td><a href="CApplication.html#runtimePath-detail">runtimePath</a></td>
+  <td>string</td>
+  <td>Returns the directory that stores runtime files.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="securityManager">
+  <td><a href="CApplication.html#securityManager-detail">securityManager</a></td>
+  <td><a href="CSecurityManager.html">CSecurityManager</a></td>
+  <td>Returns the security manager component.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="session">
+  <td><a href="CWebApplication.html#session-detail">session</a></td>
+  <td><a href="CHttpSession.html">CHttpSession</a></td>
+  <td>the session component</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="sourceLanguage">
+  <td><a href="CApplication.html#sourceLanguage-detail">sourceLanguage</a></td>
+  <td>string</td>
+  <td>the language that the application is written in.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="statePersister">
+  <td><a href="CApplication.html#statePersister-detail">statePersister</a></td>
+  <td><a href="CStatePersister.html">CStatePersister</a></td>
+  <td>Returns the state persister component.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="systemViewPath">
+  <td><a href="CWebApplication.html#systemViewPath-detail">systemViewPath</a></td>
+  <td>string</td>
+  <td>the root directory of system view files.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="theme">
+  <td><a href="CWebApplication.html#theme-detail">theme</a></td>
+  <td><a href="CTheme.html">CTheme</a></td>
+  <td>the theme used currently.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="themeManager">
+  <td><a href="CWebApplication.html#themeManager-detail">themeManager</a></td>
+  <td><a href="CThemeManager.html">CThemeManager</a></td>
+  <td>the theme manager.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="timeZone">
+  <td><a href="CApplication.html#timeZone-detail">timeZone</a></td>
+  <td>string</td>
+  <td>Returns the time zone used by this application.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="urlManager">
+  <td><a href="CApplication.html#urlManager-detail">urlManager</a></td>
+  <td><a href="CUrlManager.html">CUrlManager</a></td>
+  <td>Returns the URL manager component.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="user">
+  <td><a href="CWebApplication.html#user-detail">user</a></td>
+  <td><a href="CWebUser.html">CWebUser</a></td>
+  <td>the user session information</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="viewPath">
+  <td><a href="CWebApplication.html#viewPath-detail">viewPath</a></td>
+  <td>string</td>
+  <td>the root directory of view files.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="viewRenderer">
+  <td><a href="CWebApplication.html#viewRenderer-detail">viewRenderer</a></td>
+  <td><a href="IViewRenderer.html">IViewRenderer</a></td>
+  <td>Returns the view renderer.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="widgetFactory">
+  <td><a href="CWebApplication.html#widgetFactory-detail">widgetFactory</a></td>
+  <td><a href="IWidgetFactory.html">IWidgetFactory</a></td>
+  <td>Returns the widget factory.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+</table>
+</div>
+<a name="methods"></a>
+
+<div class="summary docMethod">
+<h2>Public Methods</h2>
+
+<p><a href="#" class="toggle">Hide inherited methods</a></p>
+
+<table class="summaryTable">
+<colgroup>
+	<col class="col-method" />
+	<col class="col-description" />
+	<col class="col-defined" />
+</colgroup>
+<tr>
+  <th>Method</th><th>Description</th><th>Defined By</th>
+</tr>
+<tr class="inherited" id="__call">
+  <td><a href="CComponent.html#__call-detail">__call()</a></td>
+  <td>Calls the named method which is not a class method.</td>
+  <td><a href="CComponent.html">CComponent</a></td>
+</tr>
+<tr class="inherited" id="__construct">
+  <td><a href="CApplication.html#__construct-detail">__construct()</a></td>
+  <td>Constructor.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="__get">
+  <td><a href="CModule.html#__get-detail">__get()</a></td>
+  <td>Getter magic method.</td>
+  <td><a href="CModule.html">CModule</a></td>
+</tr>
+<tr class="inherited" id="__isset">
+  <td><a href="CModule.html#__isset-detail">__isset()</a></td>
+  <td>Checks if a property value is null.</td>
+  <td><a href="CModule.html">CModule</a></td>
+</tr>
+<tr class="inherited" id="__set">
+  <td><a href="CComponent.html#__set-detail">__set()</a></td>
+  <td>Sets value of a component property.</td>
+  <td><a href="CComponent.html">CComponent</a></td>
+</tr>
+<tr class="inherited" id="__unset">
+  <td><a href="CComponent.html#__unset-detail">__unset()</a></td>
+  <td>Sets a component property to be null.</td>
+  <td><a href="CComponent.html">CComponent</a></td>
+</tr>
+<tr class="inherited" id="afterControllerAction">
+  <td><a href="CWebApplication.html#afterControllerAction-detail">afterControllerAction()</a></td>
+  <td>The post-filter for controller actions.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="asa">
+  <td><a href="CComponent.html#asa-detail">asa()</a></td>
+  <td>Returns the named behavior object.</td>
+  <td><a href="CComponent.html">CComponent</a></td>
+</tr>
+<tr class="inherited" id="attachBehavior">
+  <td><a href="CComponent.html#attachBehavior-detail">attachBehavior()</a></td>
+  <td>Attaches a behavior to this component.</td>
+  <td><a href="CComponent.html">CComponent</a></td>
+</tr>
+<tr class="inherited" id="attachBehaviors">
+  <td><a href="CComponent.html#attachBehaviors-detail">attachBehaviors()</a></td>
+  <td>Attaches a list of behaviors to the component.</td>
+  <td><a href="CComponent.html">CComponent</a></td>
+</tr>
+<tr class="inherited" id="attachEventHandler">
+  <td><a href="CComponent.html#attachEventHandler-detail">attachEventHandler()</a></td>
+  <td>Attaches an event handler to an event.</td>
+  <td><a href="CComponent.html">CComponent</a></td>
+</tr>
+<tr class="inherited" id="beforeControllerAction">
+  <td><a href="CWebApplication.html#beforeControllerAction-detail">beforeControllerAction()</a></td>
+  <td>The pre-filter for controller actions.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="canGetProperty">
+  <td><a href="CComponent.html#canGetProperty-detail">canGetProperty()</a></td>
+  <td>Determines whether a property can be read.</td>
+  <td><a href="CComponent.html">CComponent</a></td>
+</tr>
+<tr class="inherited" id="canSetProperty">
+  <td><a href="CComponent.html#canSetProperty-detail">canSetProperty()</a></td>
+  <td>Determines whether a property can be set.</td>
+  <td><a href="CComponent.html">CComponent</a></td>
+</tr>
+<tr class="inherited" id="clearGlobalState">
+  <td><a href="CApplication.html#clearGlobalState-detail">clearGlobalState()</a></td>
+  <td>Clears a global value.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="configure">
+  <td><a href="CModule.html#configure-detail">configure()</a></td>
+  <td>Configures the module with the specified configuration.</td>
+  <td><a href="CModule.html">CModule</a></td>
+</tr>
+<tr class="inherited" id="createAbsoluteUrl">
+  <td><a href="CApplication.html#createAbsoluteUrl-detail">createAbsoluteUrl()</a></td>
+  <td>Creates an absolute URL based on the given controller and action information.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="createController">
+  <td><a href="CWebApplication.html#createController-detail">createController()</a></td>
+  <td>Creates a controller instance based on a route.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="createUrl">
+  <td><a href="CApplication.html#createUrl-detail">createUrl()</a></td>
+  <td>Creates a relative URL based on the given controller and action information.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="detachBehavior">
+  <td><a href="CComponent.html#detachBehavior-detail">detachBehavior()</a></td>
+  <td>Detaches a behavior from the component.</td>
+  <td><a href="CComponent.html">CComponent</a></td>
+</tr>
+<tr class="inherited" id="detachBehaviors">
+  <td><a href="CComponent.html#detachBehaviors-detail">detachBehaviors()</a></td>
+  <td>Detaches all behaviors from the component.</td>
+  <td><a href="CComponent.html">CComponent</a></td>
+</tr>
+<tr class="inherited" id="detachEventHandler">
+  <td><a href="CComponent.html#detachEventHandler-detail">detachEventHandler()</a></td>
+  <td>Detaches an existing event handler.</td>
+  <td><a href="CComponent.html">CComponent</a></td>
+</tr>
+<tr class="inherited" id="disableBehavior">
+  <td><a href="CComponent.html#disableBehavior-detail">disableBehavior()</a></td>
+  <td>Disables an attached behavior.</td>
+  <td><a href="CComponent.html">CComponent</a></td>
+</tr>
+<tr class="inherited" id="disableBehaviors">
+  <td><a href="CComponent.html#disableBehaviors-detail">disableBehaviors()</a></td>
+  <td>Disables all behaviors attached to this component.</td>
+  <td><a href="CComponent.html">CComponent</a></td>
+</tr>
+<tr class="inherited" id="displayError">
+  <td><a href="CApplication.html#displayError-detail">displayError()</a></td>
+  <td>Displays the captured PHP error.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="displayException">
+  <td><a href="CApplication.html#displayException-detail">displayException()</a></td>
+  <td>Displays the uncaught PHP exception.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="enableBehavior">
+  <td><a href="CComponent.html#enableBehavior-detail">enableBehavior()</a></td>
+  <td>Enables an attached behavior.</td>
+  <td><a href="CComponent.html">CComponent</a></td>
+</tr>
+<tr class="inherited" id="enableBehaviors">
+  <td><a href="CComponent.html#enableBehaviors-detail">enableBehaviors()</a></td>
+  <td>Enables all behaviors attached to this component.</td>
+  <td><a href="CComponent.html">CComponent</a></td>
+</tr>
+<tr class="inherited" id="end">
+  <td><a href="CApplication.html#end-detail">end()</a></td>
+  <td>Terminates the application.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="evaluateExpression">
+  <td><a href="CComponent.html#evaluateExpression-detail">evaluateExpression()</a></td>
+  <td>Evaluates a PHP expression or callback under the context of this component.</td>
+  <td><a href="CComponent.html">CComponent</a></td>
+</tr>
+<tr class="inherited" id="findLocalizedFile">
+  <td><a href="CApplication.html#findLocalizedFile-detail">findLocalizedFile()</a></td>
+  <td>Returns the localized version of a specified file.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="findModule">
+  <td><a href="CWebApplication.html#findModule-detail">findModule()</a></td>
+  <td>Do not call this method. This method is used internally to search for a module by its ID.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="getAssetManager">
+  <td><a href="CWebApplication.html#getAssetManager-detail">getAssetManager()</a></td>
+  <td>Returns the asset manager component</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="getAuthManager">
+  <td><a href="CWebApplication.html#getAuthManager-detail">getAuthManager()</a></td>
+  <td>Returns the authorization manager component</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="getBasePath">
+  <td><a href="CApplication.html#getBasePath-detail">getBasePath()</a></td>
+  <td>Returns the root path of the application.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="getBaseUrl">
+  <td><a href="CApplication.html#getBaseUrl-detail">getBaseUrl()</a></td>
+  <td>Returns the relative URL for the application.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="getCache">
+  <td><a href="CApplication.html#getCache-detail">getCache()</a></td>
+  <td>Returns the cache component.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="getClientScript">
+  <td><a href="CWebApplication.html#getClientScript-detail">getClientScript()</a></td>
+  <td>Returns the client script manager.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="getComponent">
+  <td><a href="CModule.html#getComponent-detail">getComponent()</a></td>
+  <td>Retrieves the named application component.</td>
+  <td><a href="CModule.html">CModule</a></td>
+</tr>
+<tr class="inherited" id="getComponents">
+  <td><a href="CModule.html#getComponents-detail">getComponents()</a></td>
+  <td>Returns the application components.</td>
+  <td><a href="CModule.html">CModule</a></td>
+</tr>
+<tr class="inherited" id="getController">
+  <td><a href="CWebApplication.html#getController-detail">getController()</a></td>
+  <td>Returns the currently active controller</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="getControllerPath">
+  <td><a href="CWebApplication.html#getControllerPath-detail">getControllerPath()</a></td>
+  <td>Returns the directory that contains the controller classes. Defaults to 'protected/controllers'.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="getCoreMessages">
+  <td><a href="CApplication.html#getCoreMessages-detail">getCoreMessages()</a></td>
+  <td>Returns the core message translations component.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="getDateFormatter">
+  <td><a href="CApplication.html#getDateFormatter-detail">getDateFormatter()</a></td>
+  <td>Returns the locale-dependent date formatter.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="getDb">
+  <td><a href="CApplication.html#getDb-detail">getDb()</a></td>
+  <td>Returns the database connection component.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="getErrorHandler">
+  <td><a href="CApplication.html#getErrorHandler-detail">getErrorHandler()</a></td>
+  <td>Returns the error handler component.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="getEventHandlers">
+  <td><a href="CComponent.html#getEventHandlers-detail">getEventHandlers()</a></td>
+  <td>Returns the list of attached event handlers for an event.</td>
+  <td><a href="CComponent.html">CComponent</a></td>
+</tr>
+<tr class="inherited" id="getExtensionPath">
+  <td><a href="CApplication.html#getExtensionPath-detail">getExtensionPath()</a></td>
+  <td>Returns the root directory that holds all third-party extensions.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="getGlobalState">
+  <td><a href="CApplication.html#getGlobalState-detail">getGlobalState()</a></td>
+  <td>Returns a global value.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="getHomeUrl">
+  <td><a href="CApplication.html#getHomeUrl-detail">getHomeUrl()</a></td>
+  <td>Returns the homepage URL</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="getId">
+  <td><a href="CApplication.html#getId-detail">getId()</a></td>
+  <td>Returns the unique identifier for the application.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="getLanguage">
+  <td><a href="CApplication.html#getLanguage-detail">getLanguage()</a></td>
+  <td>Returns the language that the user is using and the application should be targeted to.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="getLayoutPath">
+  <td><a href="CWebApplication.html#getLayoutPath-detail">getLayoutPath()</a></td>
+  <td>Returns the root directory of layout files. Defaults to 'protected/views/layouts'.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="getLocale">
+  <td><a href="CApplication.html#getLocale-detail">getLocale()</a></td>
+  <td>Returns the locale instance.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="getLocaleDataPath">
+  <td><a href="CApplication.html#getLocaleDataPath-detail">getLocaleDataPath()</a></td>
+  <td>Returns the directory that contains the locale data.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="getMessages">
+  <td><a href="CApplication.html#getMessages-detail">getMessages()</a></td>
+  <td>Returns the application message translations component.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="getModule">
+  <td><a href="CModule.html#getModule-detail">getModule()</a></td>
+  <td>Retrieves the named application module.</td>
+  <td><a href="CModule.html">CModule</a></td>
+</tr>
+<tr class="inherited" id="getModulePath">
+  <td><a href="CModule.html#getModulePath-detail">getModulePath()</a></td>
+  <td>Returns the directory that contains the application modules.</td>
+  <td><a href="CModule.html">CModule</a></td>
+</tr>
+<tr class="inherited" id="getModules">
+  <td><a href="CModule.html#getModules-detail">getModules()</a></td>
+  <td>Returns the configuration of the currently installed modules.</td>
+  <td><a href="CModule.html">CModule</a></td>
+</tr>
+<tr class="inherited" id="getNumberFormatter">
+  <td><a href="CApplication.html#getNumberFormatter-detail">getNumberFormatter()</a></td>
+  <td>Returns the locale-dependent number formatter.
+The current <a href="RestApplication.html#getLocale">application locale</a> will be used.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="getParams">
+  <td><a href="CModule.html#getParams-detail">getParams()</a></td>
+  <td>Returns user-defined parameters.</td>
+  <td><a href="CModule.html">CModule</a></td>
+</tr>
+<tr class="inherited" id="getParentModule">
+  <td><a href="CModule.html#getParentModule-detail">getParentModule()</a></td>
+  <td>Returns the parent module.</td>
+  <td><a href="CModule.html">CModule</a></td>
+</tr>
+<tr class="inherited" id="getRequest">
+  <td><a href="CApplication.html#getRequest-detail">getRequest()</a></td>
+  <td>Returns the request component.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="getRuntimePath">
+  <td><a href="CApplication.html#getRuntimePath-detail">getRuntimePath()</a></td>
+  <td>Returns the directory that stores runtime files.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="getSecurityManager">
+  <td><a href="CApplication.html#getSecurityManager-detail">getSecurityManager()</a></td>
+  <td>Returns the security manager component.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="getSession">
+  <td><a href="CWebApplication.html#getSession-detail">getSession()</a></td>
+  <td>Returns the session component</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="getStatePersister">
+  <td><a href="CApplication.html#getStatePersister-detail">getStatePersister()</a></td>
+  <td>Returns the state persister component.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="getSystemViewPath">
+  <td><a href="CWebApplication.html#getSystemViewPath-detail">getSystemViewPath()</a></td>
+  <td>Returns the root directory of system view files. Defaults to 'protected/views/system'.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="getTheme">
+  <td><a href="CWebApplication.html#getTheme-detail">getTheme()</a></td>
+  <td>Returns the theme used currently. Null if no theme is being used.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="getThemeManager">
+  <td><a href="CWebApplication.html#getThemeManager-detail">getThemeManager()</a></td>
+  <td>Returns the theme manager.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="getTimeZone">
+  <td><a href="CApplication.html#getTimeZone-detail">getTimeZone()</a></td>
+  <td>Returns the time zone used by this application.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="getUrlManager">
+  <td><a href="CApplication.html#getUrlManager-detail">getUrlManager()</a></td>
+  <td>Returns the URL manager component.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="getUser">
+  <td><a href="CWebApplication.html#getUser-detail">getUser()</a></td>
+  <td>Returns the user session information</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="getViewPath">
+  <td><a href="CWebApplication.html#getViewPath-detail">getViewPath()</a></td>
+  <td>Returns the root directory of view files. Defaults to 'protected/views'.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="getViewRenderer">
+  <td><a href="CWebApplication.html#getViewRenderer-detail">getViewRenderer()</a></td>
+  <td>Returns the view renderer.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="getWidgetFactory">
+  <td><a href="CWebApplication.html#getWidgetFactory-detail">getWidgetFactory()</a></td>
+  <td>Returns the widget factory.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="handleError">
+  <td><a href="CApplication.html#handleError-detail">handleError()</a></td>
+  <td>Handles PHP execution errors such as warnings, notices.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="handleException">
+  <td><a href="CApplication.html#handleException-detail">handleException()</a></td>
+  <td>Handles uncaught PHP exceptions.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="hasComponent">
+  <td><a href="CModule.html#hasComponent-detail">hasComponent()</a></td>
+  <td>Checks whether the named component exists.</td>
+  <td><a href="CModule.html">CModule</a></td>
+</tr>
+<tr class="inherited" id="hasEvent">
+  <td><a href="CComponent.html#hasEvent-detail">hasEvent()</a></td>
+  <td>Determines whether an event is defined.</td>
+  <td><a href="CComponent.html">CComponent</a></td>
+</tr>
+<tr class="inherited" id="hasEventHandler">
+  <td><a href="CComponent.html#hasEventHandler-detail">hasEventHandler()</a></td>
+  <td>Checks whether the named event has attached handlers.</td>
+  <td><a href="CComponent.html">CComponent</a></td>
+</tr>
+<tr class="inherited" id="hasModule">
+  <td><a href="CModule.html#hasModule-detail">hasModule()</a></td>
+  <td>Returns a value indicating whether the specified module is installed.</td>
+  <td><a href="CModule.html">CModule</a></td>
+</tr>
+<tr class="inherited" id="hasProperty">
+  <td><a href="CComponent.html#hasProperty-detail">hasProperty()</a></td>
+  <td>Determines whether a property is defined.</td>
+  <td><a href="CComponent.html">CComponent</a></td>
+</tr>
+<tr class="inherited" id="loadGlobalState">
+  <td><a href="CApplication.html#loadGlobalState-detail">loadGlobalState()</a></td>
+  <td>Loads the global state data from persistent storage.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="onBeginRequest">
+  <td><a href="CApplication.html#onBeginRequest-detail">onBeginRequest()</a></td>
+  <td>Raised right BEFORE the application processes the request.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="onEndRequest">
+  <td><a href="CApplication.html#onEndRequest-detail">onEndRequest()</a></td>
+  <td>Raised right AFTER the application processes the request.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="onError">
+  <td><a href="CApplication.html#onError-detail">onError()</a></td>
+  <td>Raised when a PHP execution error occurs.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="onException">
+  <td><a href="CApplication.html#onException-detail">onException()</a></td>
+  <td>Raised when an uncaught PHP exception occurs.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="processRequest">
+  <td><a href="CWebApplication.html#processRequest-detail">processRequest()</a></td>
+  <td>Processes the current request.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="raiseEvent">
+  <td><a href="CComponent.html#raiseEvent-detail">raiseEvent()</a></td>
+  <td>Raises an event.</td>
+  <td><a href="CComponent.html">CComponent</a></td>
+</tr>
+<tr class="inherited" id="run">
+  <td><a href="CApplication.html#run-detail">run()</a></td>
+  <td>Runs the application.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="runController">
+  <td><a href="CWebApplication.html#runController-detail">runController()</a></td>
+  <td>Creates the controller and performs the specified action.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="saveGlobalState">
+  <td><a href="CApplication.html#saveGlobalState-detail">saveGlobalState()</a></td>
+  <td>Saves the global state data into persistent storage.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="setAliases">
+  <td><a href="CModule.html#setAliases-detail">setAliases()</a></td>
+  <td>Defines the root aliases.</td>
+  <td><a href="CModule.html">CModule</a></td>
+</tr>
+<tr class="inherited" id="setBasePath">
+  <td><a href="CApplication.html#setBasePath-detail">setBasePath()</a></td>
+  <td>Sets the root directory of the application.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="setComponent">
+  <td><a href="CModule.html#setComponent-detail">setComponent()</a></td>
+  <td>Puts a component under the management of the module.</td>
+  <td><a href="CModule.html">CModule</a></td>
+</tr>
+<tr class="inherited" id="setComponents">
+  <td><a href="CModule.html#setComponents-detail">setComponents()</a></td>
+  <td>Sets the application components.</td>
+  <td><a href="CModule.html">CModule</a></td>
+</tr>
+<tr class="inherited" id="setController">
+  <td><a href="CWebApplication.html#setController-detail">setController()</a></td>
+  <td>Sets the currently active controller</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="setControllerPath">
+  <td><a href="CWebApplication.html#setControllerPath-detail">setControllerPath()</a></td>
+  <td>Sets the directory that contains the controller classes.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="setExtensionPath">
+  <td><a href="CApplication.html#setExtensionPath-detail">setExtensionPath()</a></td>
+  <td>Sets the root directory that holds all third-party extensions.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="setGlobalState">
+  <td><a href="CApplication.html#setGlobalState-detail">setGlobalState()</a></td>
+  <td>Sets a global value.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="setHomeUrl">
+  <td><a href="CApplication.html#setHomeUrl-detail">setHomeUrl()</a></td>
+  <td>Sets the homepage URL</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="setId">
+  <td><a href="CApplication.html#setId-detail">setId()</a></td>
+  <td>Sets the unique identifier for the application.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="setImport">
+  <td><a href="CModule.html#setImport-detail">setImport()</a></td>
+  <td>Sets the aliases that are used in the module.</td>
+  <td><a href="CModule.html">CModule</a></td>
+</tr>
+<tr class="inherited" id="setLanguage">
+  <td><a href="CApplication.html#setLanguage-detail">setLanguage()</a></td>
+  <td>Specifies which language the application is targeted to.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="setLayoutPath">
+  <td><a href="CWebApplication.html#setLayoutPath-detail">setLayoutPath()</a></td>
+  <td>Sets the root directory of layout files.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="setLocaleDataPath">
+  <td><a href="CApplication.html#setLocaleDataPath-detail">setLocaleDataPath()</a></td>
+  <td>Sets the directory that contains the locale data.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="setModulePath">
+  <td><a href="CModule.html#setModulePath-detail">setModulePath()</a></td>
+  <td>Sets the directory that contains the application modules.</td>
+  <td><a href="CModule.html">CModule</a></td>
+</tr>
+<tr class="inherited" id="setModules">
+  <td><a href="CModule.html#setModules-detail">setModules()</a></td>
+  <td>Configures the sub-modules of this module.</td>
+  <td><a href="CModule.html">CModule</a></td>
+</tr>
+<tr class="inherited" id="setParams">
+  <td><a href="CModule.html#setParams-detail">setParams()</a></td>
+  <td>Sets user-defined parameters.</td>
+  <td><a href="CModule.html">CModule</a></td>
+</tr>
+<tr class="inherited" id="setRuntimePath">
+  <td><a href="CApplication.html#setRuntimePath-detail">setRuntimePath()</a></td>
+  <td>Sets the directory that stores runtime files.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="setSystemViewPath">
+  <td><a href="CWebApplication.html#setSystemViewPath-detail">setSystemViewPath()</a></td>
+  <td>Sets the root directory of system view files.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="setTheme">
+  <td><a href="CWebApplication.html#setTheme-detail">setTheme()</a></td>
+  <td>Sets the theme name</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="setTimeZone">
+  <td><a href="CApplication.html#setTimeZone-detail">setTimeZone()</a></td>
+  <td>Sets the time zone used by this application.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr id="setUser">
+  <td><a href="RestApplication.html#setUser-detail">setUser()</a></td>
+  <td>Returns the authorized user</td>
+  <td>RestApplication</td>
+</tr>
+<tr class="inherited" id="setViewPath">
+  <td><a href="CWebApplication.html#setViewPath-detail">setViewPath()</a></td>
+  <td>Sets the root directory of view files.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+</table>
+</div>
+<div class="summary docMethod">
+<h2>Protected Methods</h2>
+
+<p><a href="#" class="toggle">Hide inherited methods</a></p>
+
+<table class="summaryTable">
+<colgroup>
+	<col class="col-method" />
+	<col class="col-description" />
+	<col class="col-defined" />
+</colgroup>
+<tr>
+  <th>Method</th><th>Description</th><th>Defined By</th>
+</tr>
+<tr class="inherited" id="init">
+  <td><a href="CWebApplication.html#init-detail">init()</a></td>
+  <td>Initializes the application.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="initSystemHandlers">
+  <td><a href="CApplication.html#initSystemHandlers-detail">initSystemHandlers()</a></td>
+  <td>Initializes the class autoloader and error handlers.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="parseActionParams">
+  <td><a href="CWebApplication.html#parseActionParams-detail">parseActionParams()</a></td>
+  <td>Parses a path info into an action ID and GET variables.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+<tr class="inherited" id="preinit">
+  <td><a href="CModule.html#preinit-detail">preinit()</a></td>
+  <td>Preinitializes the module.</td>
+  <td><a href="CModule.html">CModule</a></td>
+</tr>
+<tr class="inherited" id="preloadComponents">
+  <td><a href="CModule.html#preloadComponents-detail">preloadComponents()</a></td>
+  <td>Loads static application components.</td>
+  <td><a href="CModule.html">CModule</a></td>
+</tr>
+<tr class="inherited" id="registerCoreComponents">
+  <td><a href="CWebApplication.html#registerCoreComponents-detail">registerCoreComponents()</a></td>
+  <td>Registers the core application components.</td>
+  <td><a href="CWebApplication.html">CWebApplication</a></td>
+</tr>
+</table>
+</div>
+<a name="events"></a>
+
+<div class="summary docEvent">
+<h2>Events</h2>
+
+<p><a href="#" class="toggle">Hide inherited events</a></p>
+
+<table class="summaryTable">
+<colgroup>
+	<col class="col-event" />
+	<col class="col-description" />
+	<col class="col-defined" />
+</colgroup>
+<tr>
+  <th>Event</th><th>Description</th><th>Defined By</th>
+</tr>
+<tr class="inherited" id="onBeginRequest">
+  <td><a href="CApplication.html#onBeginRequest-detail">onBeginRequest</a></td>
+  <td>Raised right BEFORE the application processes the request.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="onEndRequest">
+  <td><a href="CApplication.html#onEndRequest-detail">onEndRequest</a></td>
+  <td>Raised right AFTER the application processes the request.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="onException">
+  <td><a href="CApplication.html#onException-detail">onException</a></td>
+  <td>Raised when an uncaught PHP exception occurs.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+<tr class="inherited" id="onError">
+  <td><a href="CApplication.html#onError-detail">onError</a></td>
+  <td>Raised when a PHP execution error occurs.</td>
+  <td><a href="CApplication.html">CApplication</a></td>
+</tr>
+</table>
+</div>
+<h2>Method Details</h2>
+
+<div class="detailHeader" id="setUser-detail">
+setUser()
+<span class="detailHeaderTag">
+method
+</span>
+</div>
+
+<table class="summaryTable">
+<tr><td colspan="3">
+<div class="signature2">
+public void <b>setUser</b>(<a href="User.html">User</a> $user)</div>
+</td></tr>
+<tr>
+  <td class="paramNameCol">$user</td>
+  <td class="paramTypeCol"><a href="User.html">User</a></td>
+  <td class="paramDescCol">the autorized user</td>
+</tr>
+<tr>
+  <td class="paramNameCol">{return}</td>
+  <td class="paramTypeCol">void</td>
+  <td class="paramDescCol"></td>
+</tr>
+</table>
+
+<div class="sourceCode">
+<b>Source Code:</b> app/base/RestApplication.php#19 (<b><a href="#" class="show">show</a></b>)
+<div class="code"><code><span style="color: #000000">
+<span style="color: #0000BB"></span><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">setUser</span><span style="color: #007700">(</span><span style="color: #0000BB">$user</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">user&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$user</span><span style="color: #007700">;<br />}</span>
+</span>
+</code></div>
+</div>
+<p>Returns the authorized user</p>
+
+
+</div><!-- end of content -->
+
+<div id="apiFooter">
+Copyright &copy; 2008-2011 by <a href="http://www.yiisoft.com">Yii Software LLC</a><br/>
+All Rights Reserved.<br/>
+</div><!-- end of footer -->
+
+<script type="text/javascript">
+/*<![CDATA[*/
+$("a.toggle").toggle(function(){
+	$(this).text($(this).text().replace(/Hide/,'Show'));
+	$(this).parents(".summary").find(".inherited").hide();
+},function(){
+	$(this).text($(this).text().replace(/Show/,'Hide'));
+	$(this).parents(".summary").find(".inherited").show();
+});
+$(".sourceCode a.show").toggle(function(){
+	$(this).text($(this).text().replace(/show/,'hide'));
+	$(this).parents(".sourceCode").find("div.code").show();
+},function(){
+	$(this).text($(this).text().replace(/hide/,'show'));
+	$(this).parents(".sourceCode").find("div.code").hide();
+});
+$("a.sourceLink").click(function(){
+	$(this).attr('target','_blank');
+});
+/*]]>*/
+</script>
+
+</div><!-- end of page -->
+</body>
+</html>

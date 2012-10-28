@@ -1,6 +1,6 @@
 <?php
 /**
- * FriendController contains the actions related to the friend entity
+ * FriendController contains the actions related to the friend entity.
  *
  * @author Anderson Müller <anderson.a.muller@gmail.com>
  * @version 0.1
@@ -9,53 +9,45 @@
 class FriendController extends Controller
 {
 	/**
-	 * Fetch all friends
+	 * Default action when is not defined in the route
+	 * Respond with the available options to manage friends
+	 *
+	 * @return void
+	 */
+	public function actionIndex()
+	{
+		$this->render(array(
+			'options' => array_merge($this->getOption('list'), $this->getOption('new'))
+		));
+	}
+
+	/**
+	 * Fetch all friends of the logged user
 	 *
 	 * @return void
 	 */
 	public function actionList()
 	{
-		$actions = array(
-			array(
-				'label'  => 'List friends',
-				'verb'   => 'GET',
-				'url'    => $this->createAbsoluteUrl('list'),
-				'active' => true
-			),
-			array(
-				'label' => 'New friend',
-				'verb'  => 'GET',
-				'url'   => $this->createAbsoluteUrl('new')
-			)
-		);
+		$profiles = Yii::app()->user->profile->friends;
 
-		$authorizedUser = $this->getAuthorizedUser();
+		$list = array();
+		foreach ($profiles as $profile) {
+			$options = array_merge($this->getOption('view', array(), array(
+				'id' => $profile->id
+			)), $this->getOption('delete'));
 
-		$friends = $authorizedUser->person->profile->friends;
-
-		$records = array();
-		foreach ($friends as $friend) {
-			$records[] = CMap::mergeArray($friend->asArray(), array(
-				'actions' => array(
-					'view'   => array(
-						'label' => 'View',
-						'verb'  => 'GET',
-						'url'   => $this->createAbsoluteUrl('view', array(
-							'id' => $friend->id
-						))
-					),
-					'delete' => $authorizedUser->id == $friend->created_by ? array() : array(
-						'label' => 'Delete',
-						'verb'  => 'DELETE',
-						'url'   => $this->createAbsoluteUrl('delete')
-					)
-				)
+			$list[] = CMap::mergeArray($profile->asArray(), array(
+				'options' => $options
 			));
 		}
 
+		$options = array_merge($this->getOption('list', array(
+			'active' => true
+		)), $this->getOption('new'));
+
 		$this->render(array(
-			'actions' => $actions,
-			'friends' => $records
+			'options' => $options,
+			'list'    => $list
 		));
 	}
 
@@ -66,49 +58,30 @@ class FriendController extends Controller
 	 */
 	public function actionView()
 	{
-		if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-			$authorizedUser = $this->getAuthorizedUser();
+		$id = Yii::app()->request->getParam('id');
 
-			$friend = Profile::model()->with('person')->findByPk((int) $_GET['id'], array(
-				'condition' => 't.created_by = :created_by',
+		if ($id > 0) {
+			$profile = Profile::model()->with('person')->findByPk($id, array(
+				'condition' => 't.created_by = :user_id OR t.id = :user_id',
 				'params'    => array(
-					':created_by' => $authorizedUser->id
+					':user_id' => Yii::app()->user->id
 				)
 			));
 
-			if ($friend instanceof Profile) {
-				$actions = array(
-					array(
-						'label' => 'List friends',
-						'verb'  => 'GET',
-						'url'   => $this->createAbsoluteUrl('list')
-					),
-					array(
-						'label'  => 'View friend',
-						'verb'   => 'GET',
-						'url'    => $this->createAbsoluteUrl('view', array(
-							'id' => $friend->id
-						)),
-						'active' => true
-					)
-				);
+			if ($profile instanceof Profile) {
+				$options = array_merge($this->getOption('list'), $this->getOption('view', array(
+					'active' => true
+				), array(
+					'id' => $profile->id
+				)));
+
+				$profile = CMap::mergeArray($profile->asArray(), array(
+					'options' => array_merge($this->getOption('update'), $this->getOption('delete'))
+				));
 
 				$this->render(array(
-					'actions' => $actions,
-					'friend'  => CMap::mergeArray($friend->asArray(), array(
-						'actions' => array(
-							'update' => array(
-								'label' => 'Update',
-								'verb'  => 'PUT',
-								'url'   => $this->createAbsoluteUrl('update')
-							),
-							'delete' => array(
-								'label' => 'Delete',
-								'verb'  => 'DELETE',
-								'url'   => $this->createAbsoluteUrl('delete')
-							)
-						)
-					))
+					'options' => $options,
+					'data'    => $profile
 				));
 			} else {
 				$this->sendResponse(404);
@@ -119,125 +92,111 @@ class FriendController extends Controller
 	}
 
 	/**
-	 * Fetch a new friend
+	 * Fetch a new friend with the person data
 	 *
 	 * @return void
 	 */
 	public function actionNew()
 	{
-		$actions = array(
-			array(
-				'label' => 'List friends',
-				'verb'  => 'GET',
-				'url'   => $this->createAbsoluteUrl('list')
-			),
-			array(
-				'label'  => 'New friend',
-				'verb'   => 'GET',
-				'url'    => $this->createAbsoluteUrl('new'),
-				'active' => true
-			)
-		);
+		$profile = new Profile();
+		$profile->person = new Person();
 
-		$friend = new Profile();
-		$friend->person = new Person();
+		$profile = CMap::mergeArray($profile->asArray(), array(
+			'options' => $this->getOption('create')
+		));
+
+		$options = array_merge($this->getOption('list'), $this->getOption('new', array(
+			'active' => true
+		)));
 
 		$this->render(array(
-			'actions' => $actions,
-			'friend'  => CMap::mergeArray($friend->asArray(), array(
-				'actions' => array(
-					'create' => array(
-						'label' => 'Create',
-						'verb'  => 'POST',
-						'url'   => $this->createAbsoluteUrl('create')
-					),
-				)
-			))
+			'options' => $options,
+			'data'    => $profile
 		));
 	}
 
 	/**
-	 * Create a new friend
+	 * Create a new friend with a profile picture and person data
 	 *
 	 * @return void
 	 */
 	public function actionCreate()
 	{
-		$friend = new Profile();
+		$profileAttributes = Yii::app()->request->getPost('Profile');
+		$personAttributes = Yii::app()->request->getPost('Person');
 
-		if (isset($_POST['Profile']) && is_array($_POST['Profile']) && isset($_POST['Person']) && is_array($_POST['Person'])) {
-			$transaction = $friend->dbConnection->beginTransaction();
+		$errors = array();
+
+		if (is_array($profileAttributes) && is_array($personAttributes)) {
+			$profile = new Profile();
+
+			$transaction = $profile->dbConnection->beginTransaction();
 
 			try {
-				$friend->attributes = $_POST['Profile'];
+				if ($valid = $profile->save()) {
+					$person = new Person();
+					$person->attributes = $personAttributes;
+					$person->profile_id = $profile->id;
+					$valid = $person->save() && $valid;
 
-				$friend->authorization = md5($friend->friendname . ':' . Yii::app()->httpAuthentication->realm . ':' . $friend->password);
-				$friend->password = md5($friend->password);
-
-				$valid = false;
-				if ($friend->profile_id === null) {
-					$profile = new Profile;
-					if ($profile->save()) {
-						$person = new Person();
-						$person->attributes = $_POST['Person'];
-						$person->profile_id = $profile->id;
-						$person->save();
-
-						$friend->profile_id = $profile->id;
-
-						$valid = $friend->validate();
-					}
+					$friendship = new Friendship();
+					$friendship->profile_id = Yii::app()->user->profile_id;
+					$friendship->friend_id = $profile->id;
+					$valid = $friendship->save() && $valid;
 				}
 
-				if ($valid && $friend->save()) {
+				if ($valid) {
+					if (is_array($profileAttributes['picture'])) {
+						$pictureFileName = $profile->id . '.' . CFileHelper::getExtension($profileAttributes['picture']['name']);
+						$pictureFilePath = $profile->picturePath . $pictureFileName;
+
+						$image = new Imagick();
+						$image->readImageBlob($profileAttributes['picture']['content']);
+
+						$maxSize = 200;
+						if ($image->getImageHeight() <= $image->getImageWidth()) {
+							$image->resizeImage($maxSize, 0, Imagick::FILTER_LANCZOS, 1);
+						} else {
+							$image->resizeImage(0, $maxSize, Imagick::FILTER_LANCZOS, 1);
+						}
+						$image->stripImage();
+						$image->writeImage($pictureFilePath);
+						$image->destroy();
+
+						$profile->picture = $pictureFileName;
+						$profile->save();
+					}
+
 					$transaction->commit();
 
-					$actions = array(
-						array(
-							'label' => 'List friends',
-							'verb'  => 'GET',
-							'url'   => $this->createAbsoluteUrl('list')
-						),
-						array(
-							'label'  => 'View friend',
-							'verb'   => 'GET',
-							'url'    => $this->createAbsoluteUrl('view', array(
-								'id' => $friend->id
-							)),
+					$profile = Profile::model()->with('person')->findByPk($profile->id);
+					if ($profile instanceof Profile) {
+						$options = array_merge($this->getOption('list'), $this->getOption('view', array(
 							'active' => true
-						)
-					);
+						), array(
+							'id' => $profile->id
+						)));
 
-					$friend = Profile::model()->with('person')->findByPk($friend->id);
+						$profile = CMap::mergeArray($profile->asArray(), array(
+							'options' => array_merge($this->getOption('update'), $this->getOption('delete'))
+						));
 
-					$this->sendResponse(201, CJSON::encode(array(
-						'actions' => $actions,
-						'friend'  => CMap::mergeArray($friend->asArray(), array(
-							'actions' => array(
-								'update' => array(
-									'label' => 'Update',
-									'verb'  => 'PUT',
-									'url'   => $this->createAbsoluteUrl('update')
-								),
-								'delete' => array(
-									'label' => 'Delete',
-									'verb'  => 'DELETE',
-									'url'   => $this->createAbsoluteUrl('delete')
-								)
-							)
-						))
-					)));
+						$this->sendResponse(201, $this->render(array(
+							'options' => $options,
+							'data'    => $profile
+						), true));
+					} else {
+						$this->sendResponse(404);
+					}
 				}
 			} catch (Exception $exception) {
+				$errors['action'][] = $exception->getMessage();
 				$transaction->rollback();
 			}
 		} else {
 			$this->sendResponse(400);
 		}
 
-		if (isset($friend) && (count($friend->errors) > 0)) {
-			$errors['friend'] = $friend->errors;
-		}
 		if (isset($profile) && (count($profile->errors) > 0)) {
 			$errors['profile'] = $profile->errors;
 		}
@@ -245,68 +204,48 @@ class FriendController extends Controller
 			$errors['person'] = $person->errors;
 		}
 
-		$this->sendResponse(500, CJSON::encode(array(
+		$this->sendResponse(500, $this->render(array(
 			'errors' => $errors
-		)));
+		), true));
 	}
 
 	/**
-	 * Update a friend
+	 * Update a friend person data
 	 *
 	 * @access public
 	 * @return void
 	 */
 	public function actionUpdate()
 	{
-		parse_str(file_get_contents('php://input'), $_PUT);
+		$profileAttributes = Yii::app()->request->getPut('Profile');
+		$personAttributes = Yii::app()->request->getPut('Person');
 
-		if (isset($_PUT['Profile']['id']) && is_numeric($_PUT['Profile']['id']) && isset($_PUT['Person']) && is_array($_PUT['Person'])) {
-			$authorizedUser = $this->getAuthorizedUser();
-
-			$friend = Profile::model()->with('person')->findByPk((int) $_PUT['Profile']['id'], array(
-				'condition' => 't.created_by = :created_by',
+		if (is_array($profileAttributes) && is_numeric($profileAttributes['id']) && is_array($personAttributes)) {
+			$profile = Profile::model()->with('person')->findByPk($profileAttributes['id'], array(
+				'condition' => 't.created_by = :user_id',
 				'params'    => array(
-					':created_by' => $authorizedUser->id
+					':user_id' => Yii::app()->user->id
 				)
 			));
 
-			if ($friend instanceof Profile) {
-				$person = $friend->person;
-				$person->attributes = $_PUT['Person'];
+			if ($profile instanceof Profile) {
+				$person = $profile->person;
+				$person->attributes = $personAttributes;
 				if ($person->save()) {
-					$actions = array(
-						array(
-							'label' => 'List friends',
-							'verb'  => 'GET',
-							'url'   => $this->createAbsoluteUrl('list')
-						),
-						array(
-							'label'  => 'View friend',
-							'verb'   => 'GET',
-							'url'    => $this->createAbsoluteUrl('view', array(
-								'id' => $friend->id
-							)),
-							'active' => true
-						)
-					);
-
-					$this->sendResponse(200, CJSON::encode(array(
-						'actions' => $actions,
-						'friend'  => CMap::mergeArray($friend->asArray(), array(
-							'actions' => array(
-								'update' => array(
-									'label' => 'Update',
-									'verb'  => 'PUT',
-									'url'   => $this->createAbsoluteUrl('update')
-								),
-								'delete' => array(
-									'label' => 'Delete',
-									'verb'  => 'DELETE',
-									'url'   => $this->createAbsoluteUrl('delete')
-								)
-							)
-						))
+					$options = array_merge($this->getOption('list'), $this->getOption('view', array(
+						'active' => true
+					), array(
+						'id' => $profile->id
 					)));
+
+					$profile = CMap::mergeArray($profile->asArray(), array(
+						'options' => array_merge($this->getOption('update'), $this->getOption('delete'))
+					));
+
+					$this->sendResponse(200, $this->render(array(
+						'options' => $options,
+						'data'    => $profile
+					), true));
 				}
 			} else {
 				$this->sendResponse(404);
@@ -319,9 +258,9 @@ class FriendController extends Controller
 			$errors['person'] = $person->errors;
 		}
 
-		$this->sendResponse(500, CJSON::encode(array(
+		$this->sendResponse(500, $this->render(array(
 			'errors' => $errors
-		)));
+		), true));
 	}
 
 	/**
@@ -332,37 +271,23 @@ class FriendController extends Controller
 	 */
 	public function actionDelete()
 	{
-		parse_str(file_get_contents('php://input'), $_DELETE);
+		$profileAttributes = Yii::app()->request->getDelete('Profile');
 
-		if (isset($_DELETE['Profile']['id']) && is_numeric($_DELETE['Profile']['id'])) {
-			$authorizedUser = $this->getAuthorizedUser();
-
-			$friend = Profile::model()->with('person')->findByPk((int) $_DELETE['Profile']['id'], array(
-				'condition' => 't.created_by = :created_by AND t.id != :id',
+		if (is_array($profileAttributes) && is_numeric($profileAttributes['id'])) {
+			$profile = Profile::model()->findByPk($profileAttributes['id'], array(
+				'condition' => 't.created_by = :user_id AND t.id != :user_id',
 				'params'    => array(
-					':created_by' => $authorizedUser->id,
-					':id'         => $authorizedUser->id
+					':user_id' => Yii::app()->user->id
 				)
 			));
 
-			if ($friend instanceof Profile) {
-				if ($friend->delete()) {
-					$actions = array(
-						array(
-							'label' => 'List friends',
-							'verb'  => 'GET',
-							'url'   => $this->createAbsoluteUrl('list')
-						),
-						array(
-							'label' => 'New friend',
-							'verb'  => 'GET',
-							'url'   => $this->createAbsoluteUrl('new')
-						)
-					);
+			if ($profile instanceof Profile) {
+				if ($profile->delete()) {
+					$options = array_merge($this->getOption('list'), $this->getOption('new'));
 
-					$this->sendResponse(200, CJSON::encode(array(
-						'actions' => $actions
-					)));
+					$this->sendResponse(200, $this->render(array(
+						'options' => $options
+					), true));
 				}
 			} else {
 				$this->sendResponse(404);
@@ -371,13 +296,13 @@ class FriendController extends Controller
 			$this->sendResponse(400);
 		}
 
-		if (isset($friend) && (count($friend->errors) > 0)) {
-			$errors['friend'] = $friend->errors;
+		if (isset($profile) && (count($profile->errors) > 0)) {
+			$errors['profile'] = $profile->errors;
 		}
 
-		$this->sendResponse(500, CJSON::encode(array(
+		$this->sendResponse(500, $this->render(array(
 			'errors' => $errors
-		)));
+		), true));
 	}
 }
 ?>

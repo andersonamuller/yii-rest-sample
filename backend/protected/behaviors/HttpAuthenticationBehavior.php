@@ -1,6 +1,6 @@
 <?php
 /**
- * HttpAuthenticationBehavior performs authorization checks using http authentication
+ * HttpAuthenticationBehavior performs authorization checks using http authentication.
  *
  * By enabling this application behavior, access can be limited to only authorized users.
  * <pre>
@@ -39,7 +39,8 @@ class HttpAuthenticationBehavior extends CBehavior
 
 		$model = User::model();
 		$users = $model->cache(3600, $model->getCacheDependency())->findAll(array(
-			'condition' => 'authorization IS NOT NULL'
+			'condition' => 'authorization IS NOT NULL',
+			'index'     => 'username'
 		));
 
 		foreach ($users as $user) {
@@ -48,43 +49,42 @@ class HttpAuthenticationBehavior extends CBehavior
 		}
 
 		$username = $httpAuthentication->authenticate();
-		if ($username === false) {
-			exit();
-		} else {
+		if ($username !== false) {
+			Yii::app()->user = $users[$username];
+
 			$path = $_SERVER['DOCUMENT_ROOT'] . $_SERVER['REQUEST_URI'];
 			if (is_file($path)) {
 				if (!is_readable($path)) {
 					header('HTTP/1.0 403 Forbidden');
-					exit();
-				}
-
-				$stat = stat($path);
-				$etag = sprintf('%x-%x-%x', $stat['ino'], $stat['size'], $stat['mtime'] * 1000000);
-
-				header('Expires: ');
-				header('Cache-Control: ');
-				header('Pragma: ');
-
-				if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $etag) {
-					header('Etag: "' . $etag . '"');
-					header('HTTP/1.0 304 Not Modified');
-					exit();
-				} elseif (isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) && strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) >= $stat['mtime']) {
-					header('Last-Modified: ' . date('r', $stat['mtime']));
-					header('HTTP/1.0 304 Not Modified');
-					exit();
 				} else {
-					header('HTTP/1.0 200 OK');
+					$stat = stat($path);
+					$etag = sprintf('%x-%x-%x', $stat['ino'], $stat['size'], $stat['mtime'] * 1000000);
+
+					header('Expires: ');
+					header('Cache-Control: ');
+					header('Pragma: ');
+
+					if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $etag) {
+						header('HTTP/1.0 304 Not Modified');
+						header('Etag: "' . $etag . '"');
+					} elseif (isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) && strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) >= $stat['mtime']) {
+						header('HTTP/1.0 304 Not Modified');
+						header('Last-Modified: ' . date('r', $stat['mtime']));
+					} else {
+						header('HTTP/1.0 200 OK');
+						header('Last-Modified: ' . date('r', $stat['mtime']));
+						header('Etag: "' . $etag . '"');
+						header('Accept-Ranges: bytes');
+						header('Content-Length:' . $stat['size']);
+						header('Content-type: ' . CFileHelper::getMimeTypeByExtension($path));
+						readfile($path);
+					}
 				}
 
-				header('Last-Modified: ' . date('r', $stat['mtime']));
-				header('Etag: "' . $etag . '"');
-				header('Accept-Ranges: bytes');
-				header('Content-Length:' . $stat['size']);
-				header('Content-type: ' . CFileHelper::getMimeTypeByExtension($path));
-				readfile($path);
-				exit();
+				Yii::app()->end();
 			}
 		}
+
+		unset($users);
 	}
 }

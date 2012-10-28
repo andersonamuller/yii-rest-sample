@@ -18,6 +18,28 @@
 		<param name="Local" value="index.html">
 		</object>
 	<li><object type="text/sitemap">
+		<param name="Name" value="">
+		</object>
+	<ul>
+			<li><object type="text/sitemap">
+			<param name="Name" value="AbstractCommand">
+			<param name="Local" value="AbstractCommand.html">
+			</object>
+			<li><object type="text/sitemap">
+			<param name="Name" value="ClearcacheCommand">
+			<param name="Local" value="ClearcacheCommand.html">
+			</object>
+		</ul>
+	<li><object type="text/sitemap">
+		<param name="Name" value="application.base">
+		</object>
+	<ul>
+			<li><object type="text/sitemap">
+			<param name="Name" value="RestApplication">
+			<param name="Local" value="RestApplication.html">
+			</object>
+		</ul>
+	<li><object type="text/sitemap">
 		<param name="Name" value="application.behaviors">
 		</object>
 	<ul>

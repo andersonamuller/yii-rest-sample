@@ -1,7 +1,8 @@
 <?php
 /**
- * Behavior to convert a model to a array
- * In case the model is a ActiveRecord it will also convert its relations
+ * AsArrayBehavior converts a model object into an array.
+ *
+ * In case the model is a ActiveRecord it will also convert its relations.
  *
  * @author Anderson Müller
  * @version 0.1
@@ -12,6 +13,11 @@ class AsArrayBehavior extends CBehavior
 	public $exceptAttributes = array();
 	public $additionalAttributes = array();
 
+	/**
+	 * Does the convertion from a model object to an array
+	 *
+	 * @return array the attributes and relation attributes in case of active record
+	 */
 	public function asArray()
 	{
 		if ($this->owner instanceof CModel) {
@@ -39,9 +45,14 @@ class AsArrayBehavior extends CBehavior
 			return $attributes;
 		}
 
-		return false;
+		return array();
 	}
 
+	/**
+	 * Returns the relations of an active record
+	 *
+	 * @return array the realtions as (name => attributes)
+	 */
 	private function getRelations()
 	{
 		$relations = array();
@@ -56,15 +67,15 @@ class AsArrayBehavior extends CBehavior
 				$relations[$name] = $model->getAttributes();
 
 				$behaviors = $model->behaviors();
-				if (isset($behaviors['asarray'])) {
-					$exceptAttributes = $model->asa('asarray')->exceptAttributes;
+				if (isset($behaviors['array'])) {
+					$exceptAttributes = $model->asa('array')->exceptAttributes;
 					foreach ($exceptAttributes as &$attribute) {
 						$attribute = $name . '.' . $attribute;
 					}
 
 					$this->exceptAttributes = array_merge($this->exceptAttributes, $exceptAttributes);
 
-					$additionalAttributes = $model->asa('asarray')->additionalAttributes;
+					$additionalAttributes = $model->asa('array')->additionalAttributes;
 					foreach ($additionalAttributes as &$attribute) {
 						$attribute = $name . '.' . $attribute;
 					}

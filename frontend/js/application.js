@@ -18,6 +18,7 @@ var application = {
 		};
 
 		var spinner = new Spinner(spinnerOptions);
+
 		jQuery("#loading").ajaxStart(function() {
 			spinner.spin(this);
 			jQuery(this).show();
@@ -48,7 +49,9 @@ var application = {
 
 			if (canDo) {
 				var data = {};
-				if ((verb == 'POST') || (verb == 'PUT') || (verb == 'DELETE')) {
+				if (verb == 'POST') {
+					data = new FormData(jQuery(this).closest('form')[0]);
+				} else if ((verb == 'PUT') || (verb == 'DELETE')) {
 					data = jQuery(this).closest('form').serializeArray();
 				}
 
@@ -56,6 +59,23 @@ var application = {
 			}
 
 			return false;
+		});
+
+		jQuery(document).on('click', '#profile-picture', function(event) {
+			jQuery('input[name="Profile[picture]"]').trigger('click');
+		});
+		jQuery(document).on('change', 'input[name="Profile[picture]"]', function(event) {
+			var file = this.files[0];
+
+			jQuery('#profile-picture-filename strong').text(file.name);
+
+			if (file.name.length > 0) {
+				if (file.size > 1048576) {
+					alert('File is to big');
+				} else if (file.type != 'image/png' && file.type != 'image/jpg' && !file.type != 'image/gif' && file.type != 'image/jpeg') {
+					alert('File doesn\'t match png, jpg or gif');
+				}
+			}
 		});
 
 		jQuery.ajax({
@@ -136,7 +156,7 @@ var application = {
 	perform: function(action, verb, data) {
 		jQuery('#alert').empty();
 
-		jQuery.ajax({
+		var options = {
 			url: application.proxy,
 			type: verb,
 			accepts: 'application/json',
@@ -145,7 +165,15 @@ var application = {
 			headers: {
 				Forward: action
 			}
-		}).done(function(response) {
+		}
+
+		if (verb == 'POST') {
+			options.cache = false;
+			options.contentType = false;
+			options.processData = false;
+		}
+
+		jQuery.ajax(options).done(function(response) {
 			application.success(verb);
 			application.process(response);
 		}).fail(function(response) {
@@ -156,39 +184,24 @@ var application = {
 	process: function(response) {
 		if (response != null) {
 			jQuery('#content').empty();
-			// Options
-			if (response.options != null) {
-				application.render('options', {
-					options: response.options
-				}, '#content', 'append');
-			}
-			// Users
-			if (response.users != null) {
-				application.render('users', {
-					users: response.users
-				}, '#content', 'append');
-			}
 			if (response.user != null) {
-				response.user.isNew = function() {
-					return this.id == null;
-				};
-				application.render('user', {
-					user: response.user
-				}, '#content', 'append');
-			}
-			// Friends
-			if (response.friends != null) {
-				application.render('friends', {
-					friends: response.friends
-				}, '#content', 'append');
-			}
-			if (response.friend != null) {
-				response.friend.isNew = function() {
-					return this.id == null;
-				};
-				application.render('friend', {
-					friend: response.friend
-				}, '#content', 'append');
+				if (response.user.data != null) {
+					response.user.data.isNew = function() {
+						return this.id == null;
+					};
+				}
+
+				application.render('user', response, '#content', 'append');
+			} else if (response.friend != null) {
+				if (response.friend.data != null) {
+					response.friend.data.isNew = function() {
+						return this.id == null;
+					};
+				}
+
+				application.render('friend', response, '#content', 'append');
+			} else {
+				application.render('options', response, '#content', 'append');
 			}
 		} else {
 			application.render('welcome');

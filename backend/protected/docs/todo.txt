@@ -6,3 +6,12 @@
 - run migrations;
 
 - encrypt password with bcrypt;
+
+- generate docs
+
+- auto clean assets
+
+- check password
+- handle error messages
+
+- two legged authentication with OAuth

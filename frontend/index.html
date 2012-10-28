@@ -35,11 +35,11 @@ body {
 		<div class="navbar-inner">
 			<div class="container">
 				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
-				</a> <a class="brand" href="index.html">Yii REST Sample</a>
+				</a> <a class="brand" href="/">Yii REST Sample</a>
 				<div class="nav-collapse collapse">
 					<ul class="nav">
 						<li class="active">
-							<a href="index.html">Home</a>
+							<a href="/">Home</a>
 						</li>
 					</ul>
 				</div>
@@ -106,46 +106,83 @@ body {
 	</script>
 	<script id="options-template" type="text/x-handlebars-template">
 		<ul class="nav nav-tabs">
-			{{#options}}
+		{{#user}}
+		{{#options.list}}
 			<li {{#active}} class="active" {{/active}}>
-				<a class="option" href="{{url}}" data-verb="{{verb}}">{{label}}</a>
+				<a class="option" href="{{url}}" data-verb="{{verb}}">List users</a>
 			</li>
-			{{/options}}
+		{{/options.list}}
+		{{#options.new}}
+			<li {{#active}} class="active" {{/active}}>
+				<a class="option" href="{{url}}" data-verb="{{verb}}">New user</a>
+			</li>
+		{{/options.new}}
+		{{#options.view}}
+			<li {{#active}} class="active" {{/active}}>
+				<a class="option" href="{{url}}" data-verb="{{verb}}">View user</a>
+			</li>
+		{{/options.view}}
+		{{/user}}
+
+		{{#friend}}
+		{{#options.list}}
+			<li {{#active}} class="active" {{/active}}>
+				<a class="option" href="{{url}}" data-verb="{{verb}}">List friends</a>
+			</li>
+		{{/options.list}}
+		{{#options.new}}
+			<li {{#active}} class="active" {{/active}}>
+				<a class="option" href="{{url}}" data-verb="{{verb}}">New friend</a>
+			</li>
+		{{/options.new}}
+		{{#options.view}}
+			<li {{#active}} class="active" {{/active}}>
+				<a class="option" href="{{url}}" data-verb="{{verb}}">View friend</a>
+			</li>
+		{{/options.view}}
+		{{/friend}}
 		</ul>
 	</script>
-	<script id="users-template" type="text/x-handlebars-template">
+	<script id="user-template" type="text/x-handlebars-template">
+		{{>options-partial}}
+
+		{{#if user.list}}
 		<table class="table table-striped table-condensed">
 			<thead>
 				<tr>
 					<th></th>
 					<th>Username</th>
-					<th>First name</th>
-					<th>Last name</th>
+					<th>Name</th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody>
-				{{#users}}
+				{{#each user.list}}
 				<tr>
-					<td>{{#options.view}}<a class="option btn btn-info" href="{{url}}" data-verb="{{verb}}" title="{{label}}"><i class="icon-eye-open icon-white"></i></a> {{/options.view}}
+					<td>
+					{{#options.view}}
+						<a class="option btn btn-info" href="{{url}}" data-verb="{{verb}}" title="View user"><i class="icon-eye-open icon-white"></i></a>
+					{{/options.view}}
 					</td>
 					<td>{{username}}</td>
-					<td>{{person.first_name}}</td>
-					<td>{{person.last_name}}</td>
+					<td>{{person.fullName}}</td>
 					<td>
 						<form>
 							<input type="hidden" name="User[id]" value="{{id}}">
-						{{#options.delete}}<a class="option btn btn-danger" href="{{url}}" data-verb="{{verb}}" title="{{label}}"><i class="icon-trash icon-white"></i></a> {{/options.delete}}
+							{{#options.delete}}
+							<a class="option btn btn-danger" href="{{url}}" data-verb="{{verb}}" title="Delete user"><i class="icon-trash icon-white"></i></a>
+							{{/options.delete}}
 						</form>
 					</td>
 				</tr>
-				{{/users}}
+				{{/each}}
 			</body>
 		</table>
-	</script>
-	<script id="user-template" type="text/x-handlebars-template">
+		{{/if}}
+
+		{{#if user.data}}
 		<div>
-			{{#user}}
+			{{#with user.data}}
 			<form>
 				<h4>
 					User data{{#unless isNew}} of <em>{{username}}</em>{{/unless}}
@@ -155,39 +192,143 @@ body {
 				<input type="hidden" name="User[id]" value="{{id}}">
 				{{/unless}}
 
-				{{#if isNew}}
-				<div class="input-prepend">
-					<span class="add-on"><i class="icon-user"></i></span>
-					<input class="span4" type="text" name="User[username]" value="{{username}}" placeholder="Username">
-				</div>
+				<ul class="thumbnails">
+					<li class="thumbnail">
+						<div class="caption">
+							<p>
+								{{#if isNew}}
+								<div class="input-prepend">
+									<span class="add-on"><i class="icon-user"></i></span>
+									<input class="span4" type="text" name="User[username]" value="{{username}}" placeholder="Username">
+								</div>
 
-				<div class="input-prepend">
-					<span class="add-on"><i class="icon-lock"></i></span>
-					<input class="span4" type="password" name="User[password]" placeholder="Password">
-				</div>
-				{{/if}}
+								<div class="input-prepend">
+									<span class="add-on"><i class="icon-lock"></i></span>
+									<input class="span4" type="password" name="User[password]" placeholder="Password">
+								</div>
+								{{/if}}
 
-				<div class="input-prepend">
-					<span class="add-on"><i class="icon-font"></i></span>
-					<input class="span4" type="text" name="Person[first_name]" value="{{person.first_name}}" placeholder="First name(s)">
-				</div>
+								<div class="input-prepend">
+									<span class="add-on"><i class="icon-font"></i></span>
+									<input class="span4" type="text" name="Person[first_name]" value="{{person.first_name}}" placeholder="First name(s)">
+								</div>
 
-				<div class="input-prepend">
-					<span class="add-on"><i class="icon-font"></i></span>
-					<input class="span4" type="text" name="Person[last_name]" value="{{person.last_name}}" placeholder="Last name(s)">
-				</div>
+								<div class="input-prepend">
+									<span class="add-on"><i class="icon-font"></i></span>
+									<input class="span4" type="text" name="Person[last_name]" value="{{person.last_name}}" placeholder="Last name(s)">
+								</div>
 
-				<div class="input-prepend">
-					<span class="add-on"><i class="icon-calendar"></i></span>
-					<input class="span4" type="text" name="Person[birthdate]" value="{{person.birthdate}}" placeholder="Birthdate">
-				</div>
+								<div class="input-prepend">
+									<span class="add-on"><i class="icon-calendar"></i></span>
+									<input class="span4" type="text" name="Person[birthdate]" value="{{person.birthdate}}" placeholder="Birthdate (YYYY-MM-DD)">
+								</div>
+							</p>
 
-				{{#options.create}} <a class="option btn btn-primary" href="{{url}}" data-verb="{{verb}}"><i class="icon-plus icon-white"></i> {{label}}</a> {{/options.create}}
-				{{#options.update}} <a class="option btn btn-primary" href="{{url}}" data-verb="{{verb}}"><i class="icon-pencil icon-white"></i> {{label}}</a> {{/options.update}}
-				{{#options.delete}} <a class="option btn btn-danger" href="{{url}}" data-verb="{{verb}}"><i class="icon-trash icon-white"></i> {{label}}</a> {{/options.delete}}
+							<p>
+								{{#options.create}} <a class="option btn btn-primary" href="{{url}}" data-verb="{{verb}}"><i class="icon-plus icon-white"></i> Create</a> {{/options.create}}
+								{{#options.update}} <a class="option btn btn-primary" href="{{url}}" data-verb="{{verb}}"><i class="icon-pencil icon-white"></i> Update</a> {{/options.update}}
+								{{#options.delete}} <a class="option btn btn-danger" href="{{url}}" data-verb="{{verb}}"><i class="icon-trash icon-white"></i> Delete</a> {{/options.delete}}
+							</p>
+						</div>
+					</li>
+				</ul>
 			</form>
-			{{/user}}
+			{{/with}}
 		</div>
+		{{/if}}
+	</script>
+	<script id="friend-template" type="text/x-handlebars-template">
+		{{>options-partial}}
+
+		{{#if friend.list}}
+		<table class="table table-striped table-condensed">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Name</th>
+					<th>Birthdate</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{{#each friend.list}}
+				<tr>
+					<td>
+					{{#options.view}}
+						<a class="option btn btn-info" href="{{url}}" data-verb="{{verb}}" title="View profile"><i class="icon-eye-open icon-white"></i></a>
+					{{/options.view}}
+					</td>
+					<td>{{person.fullName}}</td>
+					<td>{{person.birthdate}}</td>
+					<td>
+						<form>
+							<input type="hidden" name="Friend[id]" value="{{id}}">
+							{{#options.delete}}
+							<a class="option btn btn-danger" href="{{url}}" data-verb="{{verb}}" title="Delete friend"><i class="icon-trash icon-white"></i></a>
+							{{/options.delete}}
+						</form>
+					</td>
+				</tr>
+				{{/each}}
+			</body>
+		</table>
+		{{/if}}
+
+		{{#if friend.data}}
+		<div>
+			{{#with friend.data}}
+			<form>
+				<h4>
+					Profile data{{#unless isNew}} of <em>{{person.fullName}}</em>{{/unless}}
+				</h4>
+
+				{{#unless isNew}}
+				<input type="hidden" name="Profile[id]" value="{{id}}">
+				{{/unless}}
+
+				<ul class="thumbnails">
+					<li class="thumbnail">
+						<div class="caption">
+							{{#if isNew}}
+							<input class="hidden" type="file" name="Profile[picture]">
+							<img class="img-polaroid" id="profile-picture" src="http://placehold.it/200x200" alt="Picture">
+							<span id="profile-picture-filename"><strong></strong></span>
+							<span class="help-block">Click above to upload a picture. Max file size of 1MB</span>
+							{{/if}}
+
+							{{#unless isNew}}
+							<img class="img-polaroid" id="profile-picture" src="/proxy.php?url={{pictureUrl}}" alt="Picture">
+							{{/unless}}
+
+							<p>
+								<div class="input-prepend">
+									<span class="add-on"><i class="icon-font"></i></span>
+									<input class="span4" type="text" name="Person[first_name]" value="{{person.first_name}}" placeholder="First name(s)">
+								</div>
+
+								<div class="input-prepend">
+									<span class="add-on"><i class="icon-font"></i></span>
+									<input class="span4" type="text" name="Person[last_name]" value="{{person.last_name}}" placeholder="Last name(s)">
+								</div>
+
+								<div class="input-prepend">
+									<span class="add-on"><i class="icon-calendar"></i></span>
+									<input class="span4" type="text" name="Person[birthdate]" value="{{person.birthdate}}" placeholder="Birthdate (YYYY-MM-DD)">
+								</div>
+							</p>
+
+							<p>
+								{{#options.create}} <a class="option btn btn-primary" href="{{url}}" data-verb="{{verb}}"><i class="icon-plus icon-white"></i> Create</a> {{/options.create}}
+								{{#options.update}} <a class="option btn btn-primary" href="{{url}}" data-verb="{{verb}}"><i class="icon-pencil icon-white"></i> Update</a> {{/options.update}}
+								{{#options.delete}} <a class="option btn btn-danger" href="{{url}}" data-verb="{{verb}}"><i class="icon-trash icon-white"></i> Delete</a> {{/options.delete}}
+							</p>
+						</div>
+					</li>
+				</ul>
+			</form>
+			{{/with}}
+		</div>
+		{{/if}}
 	</script>
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>

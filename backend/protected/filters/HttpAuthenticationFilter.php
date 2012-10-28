@@ -1,6 +1,6 @@
 <?php
 /**
- * HttpAuthenticationFilter performs authorization checks using http authentication
+ * HttpAuthenticationFilter performs authorization checks using http authentication.
  *
  * By enabling this filter, controller actions can be limited to a couple of users.
  *

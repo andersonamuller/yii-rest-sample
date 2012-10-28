@@ -35,7 +35,7 @@ Yii REST Sample Console Class Reference
 </tr>
 <tr>
   <th>Inheritance</th>
-  <td>class Controller &raquo;
+  <td>abstract class Controller &raquo;
 <a href="CController.html">CController</a> &raquo;
 <a href="CBaseController.html">CBaseController</a> &raquo;
 <a href="CComponent.html">CComponent</a></td>
@@ -59,8 +59,8 @@ Yii REST Sample Console Class Reference
 </table>
 
 <div id="classDescription">
-Controller class file
-Controller is the customized base controller class.
+Controller adds default functionalities to all controllers extending from this class.
+<br/><br/>
 All controller classes for this application should extend from this base class.</div>
 <a name="properties"></a>
 
@@ -168,10 +168,25 @@ All controller classes for this application should extend from this base class.<
 <tr>
   <th>Property</th><th>Type</th><th>Description</th><th>Defined By</th>
 </tr>
-<tr id="authorizedUser">
-  <td><a href="Controller.html#authorizedUser-detail">authorizedUser</a></td>
-  <td>mixed</td>
-  <td>Get the user authorized in the application</td>
+<tr id="options">
+  <td><a href="Controller.html#options-detail">options</a></td>
+  <td>array</td>
+  <td>the available options to be used by the consumer
+<br/><br/>
+By setting this property, child classes can specify the options,
+such as the following,
+<pre>
+array(
+    'list' =&gt; array(
+        'verb'  =&gt; 'GET',
+        'route' =&gt; 'list'
+    )
+);
+</pre>
+A good place to set it is in the init method of the controller
+<br/><br/>
+When responding to a valid request, the service can send the appropriate options,
+related to a object or to the response itself, telling the consumer what can be done next.</td>
   <td>Controller</td>
 </tr>
 </table>
@@ -438,6 +453,11 @@ All controller classes for this application should extend from this base class.<
 if the controller does not belong to any module</td>
   <td><a href="CController.html">CController</a></td>
 </tr>
+<tr id="getOption">
+  <td><a href="Controller.html#getOption-detail">getOption()</a></td>
+  <td>Returns the option</td>
+  <td>Controller</td>
+</tr>
 <tr class="inherited" id="getPageState">
   <td><a href="CController.html#getPageState-detail">getPageState()</a></td>
   <td>Returns a persistent page state value.</td>
@@ -483,10 +503,10 @@ if the controller does not belong to any module</td>
   <td>Determines whether a property is defined.</td>
   <td><a href="CComponent.html">CComponent</a></td>
 </tr>
-<tr class="inherited" id="init">
-  <td><a href="CController.html#init-detail">init()</a></td>
-  <td>Initializes the controller.</td>
-  <td><a href="CController.html">CController</a></td>
+<tr id="init">
+  <td><a href="Controller.html#init-detail">init()</a></td>
+  <td></td>
+  <td>Controller</td>
 </tr>
 <tr class="inherited" id="invalidActionParams">
   <td><a href="CController.html#invalidActionParams-detail">invalidActionParams()</a></td>
@@ -535,7 +555,7 @@ if the controller does not belong to any module</td>
 </tr>
 <tr id="render">
   <td><a href="Controller.html#render-detail">render()</a></td>
-  <td>Override the render method because all the actions will use just one view</td>
+  <td>Overrides the render method, because all the actions will use just one view</td>
   <td>Controller</td>
 </tr>
 <tr class="inherited" id="renderClip">
@@ -592,6 +612,11 @@ if the controller does not belong to any module</td>
   <td><a href="CController.html#runActionWithFilters-detail">runActionWithFilters()</a></td>
   <td>Runs an action with the specified filters.</td>
   <td><a href="CController.html">CController</a></td>
+</tr>
+<tr id="sendResponse">
+  <td><a href="Controller.html#sendResponse-detail">sendResponse()</a></td>
+  <td>Sends the response with the correct headers</td>
+  <td>Controller</td>
 </tr>
 <tr class="inherited" id="setAction">
   <td><a href="CController.html#setAction-detail">setAction()</a></td>
@@ -654,14 +679,9 @@ if the controller does not belong to any module</td>
   <td>Creates the action instance based on the action map.</td>
   <td><a href="CController.html">CController</a></td>
 </tr>
-<tr id="getAuthorizedUser">
-  <td><a href="Controller.html#getAuthorizedUser-detail">getAuthorizedUser()</a></td>
-  <td>Get the user authorized in the application</td>
-  <td>Controller</td>
-</tr>
 <tr id="getStatusCodeMessage">
   <td><a href="Controller.html#getStatusCodeMessage-detail">getStatusCodeMessage()</a></td>
-  <td>Get the message for a status code</td>
+  <td>Returns the message for a status code</td>
   <td>Controller</td>
 </tr>
 <tr class="inherited" id="loadPageStates">
@@ -679,32 +699,44 @@ if the controller does not belong to any module</td>
   <td>Saves page states as a base64 string.</td>
   <td><a href="CController.html">CController</a></td>
 </tr>
-<tr id="sendResponse">
-  <td><a href="Controller.html#sendResponse-detail">sendResponse()</a></td>
-  <td>Send the response with the correct headers</td>
-  <td>Controller</td>
-</tr>
 </table>
 </div>
 <a name="events"></a>
 
 <h2>Property Details</h2>
-<div class="detailHeader" id="authorizedUser-detail">
-authorizedUser<span class="detailHeaderTag">
+<div class="detailHeader" id="options-detail">
+options<span class="detailHeaderTag">
 property
- <em>read-only</em> </span>
+</span>
 </div>
 
 <div class="signature">
-protected mixed <a href="Controller.html#getAuthorizedUser"><b>getAuthorizedUser</b></a>()</div>
+protected array <b>$options</b>;</div>
 
-<p>Get the user authorized in the application</p>
+<p>the available options to be used by the consumer
+<br/><br/>
+By setting this property, child classes can specify the options,
+such as the following,
+<pre>
+array(
+    'list' =&gt; array(
+        'verb'  =&gt; 'GET',
+        'route' =&gt; 'list'
+    )
+);
+</pre>
+A good place to set it is in the init method of the controller
+<br/><br/>
+When responding to a valid request, the service can send the appropriate options,
+related to a object or to the response itself, telling the consumer what can be done next.
+This helps the service to specify the workflow as the consumer navigate through it,
+rather than being described upfront. It also makes it easier to change and grow the application.</p>
 
 
 <h2>Method Details</h2>
 
-<div class="detailHeader" id="getAuthorizedUser-detail">
-getAuthorizedUser()
+<div class="detailHeader" id="getOption-detail">
+getOption()
 <span class="detailHeaderTag">
 method
 </span>
@@ -713,23 +745,40 @@ method
 <table class="summaryTable">
 <tr><td colspan="3">
 <div class="signature2">
-protected mixed <b>getAuthorizedUser</b>()</div>
+public array <b>getOption</b>(string $name, array $properties=array (
+), array $urlParams=array (
+))</div>
 </td></tr>
 <tr>
+  <td class="paramNameCol">$name</td>
+  <td class="paramTypeCol">string</td>
+  <td class="paramDescCol">the option name</td>
+</tr>
+<tr>
+  <td class="paramNameCol">$properties</td>
+  <td class="paramTypeCol">array</td>
+  <td class="paramDescCol">extra properties to add to the option</td>
+</tr>
+<tr>
+  <td class="paramNameCol">$urlParams</td>
+  <td class="paramTypeCol">array</td>
+  <td class="paramDescCol">parameters used to build the option url</td>
+</tr>
+<tr>
   <td class="paramNameCol">{return}</td>
-  <td class="paramTypeCol">mixed</td>
-  <td class="paramDescCol">the user model if found else null</td>
+  <td class="paramTypeCol">array</td>
+  <td class="paramDescCol">if the option exists then returns as an array (name => option) or an empty array if it does not exist</td>
 </tr>
 </table>
 
 <div class="sourceCode">
-<b>Source Code:</b> app/components/Controller.php#106 (<b><a href="#" class="show">show</a></b>)
+<b>Source Code:</b> app/components/Controller.php#43 (<b><a href="#" class="show">show</a></b>)
 <div class="code"><code><span style="color: #000000">
-<span style="color: #0000BB"></span><span style="color: #007700">protected&nbsp;function&nbsp;</span><span style="color: #0000BB">getAuthorizedUser</span><span style="color: #007700">()<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;</span><span style="color: #0000BB">User</span><span style="color: #007700">::</span><span style="color: #0000BB">model</span><span style="color: #007700">()-&gt;</span><span style="color: #0000BB">findByUsername</span><span style="color: #007700">(</span><span style="color: #0000BB">Yii</span><span style="color: #007700">::</span><span style="color: #0000BB">app</span><span style="color: #007700">()-&gt;</span><span style="color: #0000BB">httpAuthentication</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">username</span><span style="color: #007700">);<br />}</span>
+<span style="color: #0000BB"></span><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">getOption</span><span style="color: #007700">(</span><span style="color: #0000BB">$name</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$properties&nbsp;</span><span style="color: #007700">=&nbsp;array(),&nbsp;</span><span style="color: #0000BB">$urlParams&nbsp;</span><span style="color: #007700">=&nbsp;array())<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(isset(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">options</span><span style="color: #007700">[</span><span style="color: #0000BB">$name</span><span style="color: #007700">]))&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$option&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">options</span><span style="color: #007700">[</span><span style="color: #0000BB">$name</span><span style="color: #007700">];<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$option&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">array_merge</span><span style="color: #007700">(</span><span style="color: #0000BB">$option</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$properties</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$option</span><span style="color: #007700">[</span><span style="color: #DD0000">'url'</span><span style="color: #007700">]&nbsp;=&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">createAbsoluteUrl</span><span style="color: #007700">(</span><span style="color: #0000BB">$option</span><span style="color: #007700">[</span><span style="color: #DD0000">'route'</span><span style="color: #007700">],&nbsp;</span><span style="color: #0000BB">$urlParams</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unset(</span><span style="color: #0000BB">$option</span><span style="color: #007700">[</span><span style="color: #DD0000">'route'</span><span style="color: #007700">]);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;array(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$name&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #0000BB">$option<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;array();<br />}</span>
 </span>
 </code></div>
 </div>
-<p>Get the user authorized in the application</p>
+<p>Returns the option</p>
 
 
 <div class="detailHeader" id="getStatusCodeMessage-detail">
@@ -757,14 +806,44 @@ protected string <b>getStatusCodeMessage</b>(mixed $status)</div>
 </table>
 
 <div class="sourceCode">
-<b>Source Code:</b> app/components/Controller.php#52 (<b><a href="#" class="show">show</a></b>)
+<b>Source Code:</b> app/components/Controller.php#135 (<b><a href="#" class="show">show</a></b>)
 <div class="code"><code><span style="color: #000000">
 <span style="color: #0000BB"></span><span style="color: #007700">protected&nbsp;function&nbsp;</span><span style="color: #0000BB">getStatusCodeMessage</span><span style="color: #007700">(</span><span style="color: #0000BB">$status</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$codes&nbsp;</span><span style="color: #007700">=&nbsp;Array(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">100&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Continue'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">101&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Switching&nbsp;Protocols'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">200&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'OK'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">201&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Created'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">202&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Accepted'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">203&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Non-Authoritative&nbsp;Information'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">204&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'No&nbsp;Content'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">205&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Reset&nbsp;Content'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">206&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Partial&nbsp;Content'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">300&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Multiple&nbsp;Choices'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">301&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Moved&nbsp;Permanently'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">302&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Found'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">303&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'See&nbsp;Other'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">304&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Not&nbsp;Modified'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">305&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Use&nbsp;Proxy'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">306&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'(Unused)'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">307&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Temporary&nbsp;Redirect'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">400&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Bad&nbsp;Request'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">401&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Unauthorized'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">402&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Payment&nbsp;Required'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">403&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Forbidden'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">404&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Not&nbsp;Found'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">405&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Method&nbsp;Not&nbsp;Allowed'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">406&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Not&nbsp;Acceptable'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">407&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Proxy&nbsp;Authentication&nbsp;Required'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">408&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Request&nbsp;Timeout'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">409&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Conflict'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">410&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Gone'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">411&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Length&nbsp;Required'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">412&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Precondition&nbsp;Failed'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">413&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Request&nbsp;Entity&nbsp;Too&nbsp;Large'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">414&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Request-URI&nbsp;Too&nbsp;Long'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">415&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Unsupported&nbsp;Media&nbsp;Type'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">416&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Requested&nbsp;Range&nbsp;Not&nbsp;Satisfiable'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">417&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Expectation&nbsp;Failed'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">500&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Internal&nbsp;Server&nbsp;Error'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">501&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Not&nbsp;Implemented'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">502&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Bad&nbsp;Gateway'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">503&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Service&nbsp;Unavailable'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">504&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'Gateway&nbsp;Timeout'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">505&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'HTTP&nbsp;Version&nbsp;Not&nbsp;Supported'<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(isset(</span><span style="color: #0000BB">$codes</span><span style="color: #007700">[</span><span style="color: #0000BB">$status</span><span style="color: #007700">]))&nbsp;?&nbsp;</span><span style="color: #0000BB">$codes</span><span style="color: #007700">[</span><span style="color: #0000BB">$status</span><span style="color: #007700">]&nbsp;:&nbsp;</span><span style="color: #DD0000">''</span><span style="color: #007700">;<br />}</span>
 </span>
 </code></div>
 </div>
-<p>Get the message for a status code</p>
+<p>Returns the message for a status code</p>
 
+
+<div class="detailHeader" id="init-detail">
+init()
+<span class="detailHeaderTag">
+method
+</span>
+</div>
+
+<table class="summaryTable">
+<tr><td colspan="3">
+<div class="signature2">
+public void <b>init</b>()</div>
+</td></tr>
+</table>
+
+<div class="sourceCode">
+<b>Source Code:</b> app/components/Controller.php#62 (<b><a href="#" class="show">show</a></b>)
+<div class="code"><code><span style="color: #000000">
+<span style="color: #0000BB"></span><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">init</span><span style="color: #007700">()<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">options&nbsp;</span><span style="color: #007700">=&nbsp;array(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'list'&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">=&gt;&nbsp;array(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'verb'&nbsp;&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'GET'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'route'&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'list'<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">),<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'view'&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">=&gt;&nbsp;array(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'verb'&nbsp;&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'GET'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'route'&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'view'<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">),<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'new'&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">=&gt;&nbsp;array(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'verb'&nbsp;&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'GET'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'route'&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'new'<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">),<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'create'&nbsp;</span><span style="color: #007700">=&gt;&nbsp;array(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'verb'&nbsp;&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'POST'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'route'&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'create'<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">),<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'update'&nbsp;</span><span style="color: #007700">=&gt;&nbsp;array(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'verb'&nbsp;&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'PUT'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'route'&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'update'<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">),<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'delete'&nbsp;</span><span style="color: #007700">=&gt;&nbsp;array(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'verb'&nbsp;&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'DELETE'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'route'&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'delete'<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;);<br />}</span>
+</span>
+</code></div>
+</div>
+<p></p>
+
+<div class="SeeAlso">
+<h4>See Also</h4>
+<ul>
+	<li><a href="CController.html#init">CController::init()</a></li>
+</ul>
+</div>
 
 <div class="detailHeader" id="render-detail">
 render()
@@ -776,7 +855,7 @@ method
 <table class="summaryTable">
 <tr><td colspan="3">
 <div class="signature2">
-public void <b>render</b>(array $data=NULL)</div>
+public string <b>render</b>(array $data=NULL, $return=false)</div>
 </td></tr>
 <tr>
   <td class="paramNameCol">$data</td>
@@ -784,20 +863,25 @@ public void <b>render</b>(array $data=NULL)</div>
   <td class="paramDescCol">the data to be available in the view</td>
 </tr>
 <tr>
-  <td class="paramNameCol">{return}</td>
-  <td class="paramTypeCol">void</td>
+  <td class="paramNameCol">$return</td>
+  <td class="paramTypeCol"></td>
   <td class="paramDescCol"></td>
+</tr>
+<tr>
+  <td class="paramNameCol">{return}</td>
+  <td class="paramTypeCol">string</td>
+  <td class="paramDescCol">the rendering result. Null if the rendering result is not required.</td>
 </tr>
 </table>
 
 <div class="sourceCode">
-<b>Source Code:</b> app/components/Controller.php#19 (<b><a href="#" class="show">show</a></b>)
+<b>Source Code:</b> app/components/Controller.php#98 (<b><a href="#" class="show">show</a></b>)
 <div class="code"><code><span style="color: #000000">
-<span style="color: #0000BB"></span><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">render</span><span style="color: #007700">(</span><span style="color: #0000BB">$data&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">null</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">parent</span><span style="color: #007700">::</span><span style="color: #0000BB">render</span><span style="color: #007700">(</span><span style="color: #DD0000">'/default/index'</span><span style="color: #007700">,&nbsp;array(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'data'&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #0000BB">$data<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">));<br />}</span>
+<span style="color: #0000BB"></span><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">render</span><span style="color: #007700">(</span><span style="color: #0000BB">$data&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">null</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$return&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">false</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$data&nbsp;</span><span style="color: #007700">=&nbsp;array(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">id&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #0000BB">$data<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;</span><span style="color: #0000BB">parent</span><span style="color: #007700">::</span><span style="color: #0000BB">render</span><span style="color: #007700">(</span><span style="color: #DD0000">'/default/index'</span><span style="color: #007700">,&nbsp;array(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'data'&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #0000BB">$data<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">),&nbsp;</span><span style="color: #0000BB">$return</span><span style="color: #007700">);<br />}</span>
 </span>
 </code></div>
 </div>
-<p>Override the render method because all the actions will use just one view</p>
+<p>Overrides the render method, because all the actions will use just one view</p>
 
 
 <div class="detailHeader" id="sendResponse-detail">
@@ -810,7 +894,7 @@ method
 <table class="summaryTable">
 <tr><td colspan="3">
 <div class="signature2">
-protected void <b>sendResponse</b>(integer $status=200, string $body='', string $contentType='application/json')</div>
+public void <b>sendResponse</b>(integer $status=200, mixed $body=NULL, string $contentType='application/json')</div>
 </td></tr>
 <tr>
   <td class="paramNameCol">$status</td>
@@ -819,7 +903,7 @@ protected void <b>sendResponse</b>(integer $status=200, string $body='', string 
 </tr>
 <tr>
   <td class="paramNameCol">$body</td>
-  <td class="paramTypeCol">string</td>
+  <td class="paramTypeCol">mixed</td>
   <td class="paramDescCol">the response body</td>
 </tr>
 <tr>
@@ -835,13 +919,13 @@ protected void <b>sendResponse</b>(integer $status=200, string $body='', string 
 </table>
 
 <div class="sourceCode">
-<b>Source Code:</b> app/components/Controller.php#34 (<b><a href="#" class="show">show</a></b>)
+<b>Source Code:</b> app/components/Controller.php#117 (<b><a href="#" class="show">show</a></b>)
 <div class="code"><code><span style="color: #000000">
-<span style="color: #0000BB"></span><span style="color: #007700">protected&nbsp;function&nbsp;</span><span style="color: #0000BB">sendResponse</span><span style="color: #007700">(</span><span style="color: #0000BB">$status&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">200</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$body&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #DD0000">''</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$contentType&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #DD0000">'application/json'</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">header</span><span style="color: #007700">(</span><span style="color: #DD0000">'HTTP/1.1&nbsp;'&nbsp;</span><span style="color: #007700">.&nbsp;</span><span style="color: #0000BB">$status&nbsp;</span><span style="color: #007700">.&nbsp;</span><span style="color: #DD0000">'&nbsp;'&nbsp;</span><span style="color: #007700">.&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getStatusCodeMessage</span><span style="color: #007700">(</span><span style="color: #0000BB">$status</span><span style="color: #007700">));<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">header</span><span style="color: #007700">(</span><span style="color: #DD0000">'Content-type:&nbsp;'&nbsp;</span><span style="color: #007700">.&nbsp;</span><span style="color: #0000BB">$contentType</span><span style="color: #007700">);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(</span><span style="color: #0000BB">$body&nbsp;</span><span style="color: #007700">!=&nbsp;</span><span style="color: #DD0000">''</span><span style="color: #007700">)&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #0000BB">$body</span><span style="color: #007700">;<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">Yii</span><span style="color: #007700">::</span><span style="color: #0000BB">app</span><span style="color: #007700">()-&gt;</span><span style="color: #0000BB">end</span><span style="color: #007700">();<br />}</span>
+<span style="color: #0000BB"></span><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">sendResponse</span><span style="color: #007700">(</span><span style="color: #0000BB">$status&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">200</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$body&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">null</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$contentType&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #DD0000">'application/json'</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">header</span><span style="color: #007700">(</span><span style="color: #DD0000">'HTTP/1.1&nbsp;'&nbsp;</span><span style="color: #007700">.&nbsp;</span><span style="color: #0000BB">$status&nbsp;</span><span style="color: #007700">.&nbsp;</span><span style="color: #DD0000">'&nbsp;'&nbsp;</span><span style="color: #007700">.&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getStatusCodeMessage</span><span style="color: #007700">(</span><span style="color: #0000BB">$status</span><span style="color: #007700">));<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">header</span><span style="color: #007700">(</span><span style="color: #DD0000">'Content-type:&nbsp;'&nbsp;</span><span style="color: #007700">.&nbsp;</span><span style="color: #0000BB">$contentType</span><span style="color: #007700">);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(!empty(</span><span style="color: #0000BB">$body</span><span style="color: #007700">))&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #0000BB">$body</span><span style="color: #007700">;<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">Yii</span><span style="color: #007700">::</span><span style="color: #0000BB">app</span><span style="color: #007700">()-&gt;</span><span style="color: #0000BB">end</span><span style="color: #007700">();<br />}</span>
 </span>
 </code></div>
 </div>
-<p>Send the response with the correct headers</p>
+<p>Sends the response with the correct headers</p>
 
 
 </div><!-- end of content -->

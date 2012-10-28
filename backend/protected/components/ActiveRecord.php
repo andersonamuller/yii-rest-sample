@@ -1,6 +1,6 @@
 <?php
 /**
- * ActiveRecord class file
+ * ActiveRecord adds default functionalities to all models extending from this class.
  *
  * @property string $created_on the date and time of when the record was created
  * @property integer $created_by the id of the user who created the record
@@ -11,7 +11,7 @@
  * @version 0.1
  * @package application.components
  */
-class ActiveRecord extends CActiveRecord
+abstract class ActiveRecord extends CActiveRecord
 {
 	private $createdByAttribute = 'created_by';
 	private $updatedByAttribute = 'updated_by';
@@ -53,11 +53,12 @@ class ActiveRecord extends CActiveRecord
 	{
 		return CMap::mergeArray(parent::behaviors(), array(
 			'datetimelog' => array(
-				'class'           => 'zii.behaviors.CTimestampBehavior',
-				'createAttribute' => 'created_on',
-				'updateAttribute' => 'updated_on',
+				'class'             => 'zii.behaviors.CTimestampBehavior',
+				'createAttribute'   => 'created_on',
+				'updateAttribute'   => 'updated_on',
+				'setUpdateOnCreate' => true
 			),
-			'asarray'     => array(
+			'array'       => array(
 				'class'            => 'AsArrayBehavior',
 				'exceptAttributes' => array(
 					'created_on',
@@ -78,10 +79,10 @@ class ActiveRecord extends CActiveRecord
 	public function beforeSave()
 	{
 		if ($this->getIsNewRecord() && ($this->createdByAttribute !== null)) {
-			$this->{$this->createdByAttribute} = $this->getUserByAttribute($this->createdByAttribute);
+			$this->{$this->createdByAttribute} = Yii::app()->user->id;
 		}
 		if ((!$this->getIsNewRecord() || $this->asa('datetimelog')->setUpdateOnCreate) && ($this->updatedByAttribute !== null)) {
-			$this->{$this->updatedByAttribute} = $this->getUserByAttribute($this->updatedByAttribute);
+			$this->{$this->updatedByAttribute} = Yii::app()->user->id;
 		}
 
 		return parent::beforeSave();
@@ -96,7 +97,6 @@ class ActiveRecord extends CActiveRecord
 	{
 		return new CChainedCacheDependency(array(
 			new CDbCacheDependency('SELECT COUNT(id) FROM ' . $this->tableName()),
-			new CDbCacheDependency('SELECT MAX(created_on) FROM ' . $this->tableName()),
 			new CDbCacheDependency('SELECT MAX(updated_on) FROM ' . $this->tableName())
 		));
 	}

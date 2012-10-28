@@ -16,36 +16,10 @@ class DefaultController extends Controller
 	{
 		$user = User::model()->findByUsername(Yii::app()->httpAuthentication->username);
 		if (($user instanceof User) && $user->isAdmin()) {
-			$options = array(
-				array(
-					'label' => 'List users',
-					'verb'  => 'GET',
-					'url'   => $this->createAbsoluteUrl('user/list')
-				),
-				array(
-					'label' => 'New user',
-					'verb'  => 'GET',
-					'url'   => $this->createAbsoluteUrl('user/new')
-				)
-			);
+			$this->forward('user/index');
 		} else {
-			$options = array(
-				array(
-					'label' => 'List friends',
-					'verb'  => 'GET',
-					'url'   => $this->createAbsoluteUrl('friend/list')
-				),
-				array(
-					'label' => 'New friend',
-					'verb'  => 'GET',
-					'url'   => $this->createAbsoluteUrl('friend/new')
-				)
-			);
+			$this->forward('friend/index');
 		}
-
-		$this->render(array(
-			'options' => $options
-		));
 	}
 
 	/**
