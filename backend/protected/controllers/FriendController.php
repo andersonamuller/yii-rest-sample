@@ -149,6 +149,9 @@ class FriendController extends Controller
 					if (is_array($profileAttributes['picture'])) {
 						$pictureFileName = $profile->id . '.' . CFileHelper::getExtension($profileAttributes['picture']['name']);
 						$pictureFilePath = $profile->picturePath . $pictureFileName;
+						if (!is_dir($profile->picturePath)) {
+							mkdir($profile->picturePath);
+						}
 
 						$image = new Imagick();
 						$image->readImageBlob($profileAttributes['picture']['content']);
